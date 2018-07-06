@@ -19,10 +19,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/home',
-      component: App,
-      children: [
-        {
+      redirect: '/home'      
+    },
+    {
           path: '/home',
           name: 'Home',
           component: Home
@@ -74,8 +73,6 @@ export default new Router({
           name: 'UserRegister',
           component: UserRegister
         }
-      ]
-    }  
 
   ],
   scrollBehavior (to, from, savedPosition) {//设置页面初始位置为顶部

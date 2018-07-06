@@ -31,7 +31,7 @@
 				下一题
 			</test-btn>
 			<test-btn 
-				v-if="itemNum==itemDetail.length&&choosedId.length>0"
+				v-if="itemNum===itemDetail.length&&choosedId.length>0"
 				@clickTestBtn="submitAnswer(true)">
 				提交答案
 			</test-btn>			
@@ -129,23 +129,32 @@
 	  			}
 			},
 			submitAnswer (isSub) {
-				if(isSub){//是否提交最后一题
+				if(isSub){//是否提交最后一题					
+
 					if (this.choosedId.length>0) {		  			
 			  			this.addNum({
 			  				topic_id:this.topicId,
 			  				topic_type:this.topicType,
 			  				answer_id:this.choosedId
 			  			});
-			  			clearInterval(this.timer)
-			  			this.choosedId = []; 
-		  				this.$router.push('/scoreCard')
+			  			this.confirmSubmit();			  			
 		  			}else{
 		  				alert('您还没有选择答案哦')
 		  			}
 				}else{
-					this.$router.push('/scoreCard')
+					this.confirmSubmit();
 				}
 				
+			},
+			confirmSubmit () {
+				if(this.answerid.len<this.itemNum){
+					if(!confirm('您还有别的题没有答哦，您确认要提交吗？')){
+						return;
+					}
+				}		
+				clearInterval(this.timer)
+		  		this.choosedId = []; 
+				this.$router.push('/scoreCard')
 			},
 			handleAnswerClicked (num,answers) {
 				this.showAnswer = false;

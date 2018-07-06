@@ -40,7 +40,7 @@
 
 <style lang="scss" scoped>
 .wrap{
-	height: 2.5rem;
+	min-height: 2.5rem;
 	@include padlf40;	
 	@include border-bottom;
 	.title{
@@ -59,14 +59,18 @@
 		}
 	}
 	.list{
-		margin-top: .45rem;
+		margin-top: .25rem;
+		margin-bottom: .15rem;
 		.list-link{
 			font-size: $font18;
 			color: $color-grey;
-			padding: .1rem .36rem;
+			padding: 0rem .36rem;
 			border-radius: .36rem;
 			border:1px solid $blue;
 			margin-right: .45rem;
+			margin-bottom: .15rem;
+			display: inline-block;
+			white-space: nowrap;
 		}
 	}
 }	

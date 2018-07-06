@@ -11,8 +11,9 @@ export default {
   props:['title','backUrl'],
   methods: {
     handleReturnClick () {
-      console.log(this.backUrl);
+      
       if(this.backUrl){
+        console.log(this.backUrl);
         this.$router.push(this.backUrl);
       }else{
         this.$router.go(-1);  

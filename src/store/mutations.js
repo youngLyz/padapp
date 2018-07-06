@@ -12,10 +12,12 @@ export default {
 	},
 	//记录答案
 	[REMBER_ANSWER](state, payload) {
-		state.answerid.len++;		
-		let currentItem = state.answerid[payload.topic_type].find((item) => item.num===state.itemNum);
-		//console.log('mutations:'+payload.answer_id);
+		
+		let currentItem = state.answerid[payload.topic_type].find((item) => item.num===state.itemNum);		
 		currentItem.answer_id = payload.answer_id;
+		if(currentItem.answer_id.length==0){
+			state.answerid.len++	
+		}
 	},
 	/*
 	记录做题时间

@@ -10,7 +10,7 @@
         name="custom-classes-transition"
         enter-active-class="animated slideInDown"
         leave-active-class="animated slideOutUp">
-      <div class="header-list" v-show="isShow">
+      <div class="header-list" v-show="isShow">        
         <ul class="list">
           <li class="list-item"
               v-for="(item,index) of titleList"
@@ -22,7 +22,7 @@
             切换科目
             <span class="iconfont">&#xe8f0;</span>
           </router-link>
-        </ul>
+        </ul>        
       </div> 
     </transition>     
   </header>
@@ -88,7 +88,7 @@ export default {
   top:$title-height;
   left: 0;
   bottom: 0;
- /* background: rgba(0,0,0,.1);*/
+  background: rgba(0,0,0,.1);
   z-index: 98; 
   width: 100%;
 }

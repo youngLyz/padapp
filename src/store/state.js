@@ -1,0 +1,178 @@
+export default {
+	firstClz:'',
+	secondClz:'',
+	itemNum: 1, // 第几题
+	allTime: 0,  //总共用时
+	showTime:'00:00:00',
+	timer: '', //定时器
+	itemTheme: '2018年资料员专业基础知识试题一',
+	itemDetail: [{
+		"topic_id": 20,		
+		"type": "ONE",
+		"type_name": "单选题",
+		"topic_name": "欢乐星期五标题1",		
+		"topic_answer": [{
+			"topic_answer_id": 1,
+			"topic_id": 20,
+			"answer_name": "答案aaaa",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 2,
+			"topic_id": 20,
+			"answer_name": "正确答案",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 3,
+			"topic_id": 20,
+			"answer_name": "答案cccc",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 4,
+			"topic_id": 20,
+			"answer_name": "答案dddd",
+			"is_standard_answer": 1
+		}]
+	}, {
+		"topic_id": 21,
+		"type": "MORE",
+		"type_name": "多选题",
+		"topic_name": "欢乐星期五标题2",		
+		"topic_answer": [{
+			"topic_answer_id": 5,
+			"topic_id": 21,
+			"answer_name": "答案A",
+			"is_standard_answer": 1
+		}, {
+			"topic_answer_id": 6,
+			"topic_id": 21,
+			"answer_name": "答案B",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 7,
+			"topic_id": 21,
+			"answer_name": "正确答案",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 8,
+			"topic_id": 21,
+			"answer_name": "答案D",
+			"is_standard_answer": 0
+		}]
+	}, {
+		"topic_id": 22,
+		"type": "MORE",
+		"type_name": "多选题",		
+		"topic_name": "欢乐星期五标题3",
+		"topic_answer": [{
+			"topic_answer_id": 9,
+			"topic_id": 22,
+			"answer_name": "测试A",
+			"is_standard_answer": 1
+		}, {
+			"topic_answer_id": 10,
+			"topic_id": 22,
+			"answer_name": "BBBBBB",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 11,
+			"topic_id": 22,
+			"answer_name": "CCCCCC",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 12,
+			"topic_id": 22,
+			"answer_name": "正确答案",
+			"is_standard_answer": 0
+		}]
+	}, {
+		"topic_id": 23,		
+		"type": "MORE",
+		"type_name": "多选题",
+		"topic_name": "欢乐星期五标题4",
+		"topic_answer": [{
+			"topic_answer_id": 13,
+			"topic_id": 23,
+			"answer_name": "正确答案",
+			"is_standard_answer": 1
+		}, {
+			"topic_answer_id": 14,
+			"topic_id": 23,
+			"answer_name": "A是错的",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 15,
+			"topic_id": 23,
+			"answer_name": "D是对的",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 16,
+			"topic_id": 23,
+			"answer_name": "C说的不对",
+			"is_standard_answer": 0
+		}]
+	}, {
+		"topic_id": 24,
+		"type": "MORE",
+		"type_name": "多选题",
+		"topic_name": "欢乐星期五标题5",
+		"topic_answer": [{
+			"topic_answer_id": 17,
+			"topic_id": 24,
+			"answer_name": "错误答案",
+			"is_standard_answer": 1
+		}, {
+			"topic_answer_id": 18,
+			"topic_id": 24,
+			"answer_name": "正确答案",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 19,
+			"topic_id": 24,
+			"answer_name": "错误答案",
+			"is_standard_answer": 0
+		}, {
+			"topic_answer_id": 20,
+			"topic_id": 24,
+			"answer_name": "错误答案",
+			"is_standard_answer": 0
+		}]
+	},{
+		"topic_id": 25,
+		"type": "TFNG",
+		"type_name": "判断题",
+		"topic_name": "欢乐星期五标题tf1",
+		"topic_answer":[{
+			"topic_answer_id": 21,
+			"topic_id": 25,
+			"answer_name": "错误答案",
+			"is_standard_answer": 0
+		},{
+			"topic_answer_id": 22,
+			"topic_id": 25,
+			"answer_name": "正确答案",
+			"is_standard_answer": 1
+		}]
+	},{
+		"topic_id": 26,
+		"type": "TFNG",
+		"type_name": "判断题",
+		"topic_name": "欢乐星期五标题tf2",
+		"topic_answer":[{
+			"topic_answer_id": 23,
+			"topic_id": 26,
+			"answer_name": "错误答案",
+			"is_standard_answer": 0
+		},{
+			"topic_answer_id": 24,
+			"topic_id": 26,
+			"answer_name": "正确答案",
+			"is_standard_answer": 1
+		}]
+	}],
+	answerid:{
+		'ONE':[],
+		'MORE':[],
+		'TFNG':[],
+		len:0
+	}, //答案id
+}

@@ -1,0 +1,2 @@
+webpackJsonp([4],{GbIZ:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var a={name:"WrongTest",data:function(){return{title:"错题重做"}},components:{PageHeader:n("teIl").a}},r={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",[t("page-header",{attrs:{title:this.title}})],1)},staticRenderFns:[]};var i=n("VU/8")(a,r,!1,function(e){n("jOox")},"data-v-c6f5bdfe",null);t.default=i.exports},jOox:function(e,t){}});
+//# sourceMappingURL=4.e9ff30628185ab3d03db.js.map

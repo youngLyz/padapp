@@ -10,7 +10,7 @@
 				:firstClass="item.firstClass"
 				:secondClass="item.secondClass"></engineer>
 		</div>
-		<home-footer></home-footer>
+		
 	</div>
 	
 </template>
@@ -18,13 +18,12 @@
 <script type="text/javascript">
 	import SimpleHeader from 'comp/SimpleHeader' 
 	import HomeSwiper from './home/HomeSwiper'	
-	import Engineer from './home/Engineer'
-	import HomeFooter from 'comp/Footer'
+	import Engineer from './home/Engineer'	
 	export default {
 		name: 'Home',
 		data () {
 			return {
-				title: '上学吧八大员考试题库',
+				title: '智来天扬智慧移动考试系统',
 				swiperList:[
 					{id:1,img:require('../assets/images/swiper1.jpg')},
 					{id:2,img:require('../assets/images/swiper2.jpg')}
@@ -45,8 +44,7 @@
 		components: {
 			SimpleHeader,
 			HomeSwiper,
-			Engineer,
-			HomeFooter
+			Engineer
 		}
 	}
 </script>

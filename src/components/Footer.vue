@@ -1,27 +1,49 @@
 <template>	
 	<nav class="footer-nav">
-		<router-link to="/home" class="footer-link active">
+		<a href="javascript:void(0)"
+			@click="openPage('/home',1)" 
+			:class="{'active':activeLink==='Home'||activeLink==='Exercise'}"
+			class="footer-link">
 			<span class="iconfont">&#xe613;</span>
 			<span class="footer-text">练习</span>
-		</router-link>
-		<router-link to="/home" class="footer-link">
+		</a>
+		<a href="javascript:void(0)"
+			@click="openPage('/exam',2)" 
+			class="footer-link"
+			:class="{'active':activeLink==='Exam'}">
 			<span class="iconfont">&#xe677;</span>
 			<span class="footer-text">考试</span>
-		</router-link>
-		<router-link to="/home" class="footer-link">
+		</a>
+		<a href="javascript:void(0)"
+			@click="openPage('/read',3)" 
+			class="footer-link"
+			:class="{'active':activeLink==='Read'}">
 			<span class="iconfont">&#xe615;</span>
 			<span class="footer-text">阅读</span>
-		</router-link>
-		<router-link to="/home" class="footer-link">
+		</a>
+		<a href="javascript:void(0)"
+			@click="openPage('/userCenter',4)" 
+			class="footer-link"			
+			:class="{'active':activeLink==='UserCenter'}">
 			<span class="iconfont">&#xe612;</span>
 			<span class="footer-text">我的</span>
-		</router-link>
+		</a>
 	</nav>
 </template>
 
 <script type="text/javascript">
 	export default {
-		name: 'HomeFooter'
+		name: 'HomeFooter',		
+		computed: {
+			activeLink () {
+				return this.$route.name;
+			}
+		},
+		methods: {
+			openPage (url,order) {
+				this.$router.openPage(url,order);
+			}
+		}
 	}
 </script>
 

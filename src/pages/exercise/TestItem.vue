@@ -24,35 +24,39 @@
 					</button>
 					{{item.answer_name}}
 				</li>				
-			</ul>
+			</ul>			
 			<test-btn 
-				v-if="itemNum < itemDetail.length&&choosedId.length>0"
-				@clickTestBtn="nextItem">
-				下一题
-			</test-btn>
-			<test-btn 
-				v-if="itemNum===itemDetail.length&&choosedId.length>0"
-				@clickTestBtn="submitAnswer(true)">
+				v-if="itemNum===itemDetail.length"
+				@clickTestBtn="submitAnswer">
 				提交答案
 			</test-btn>			
 		</div>
 		<test-footer 
 			:downClock="showTime"
-			@clickAnswerCard="showAnswer=true"></test-footer>
+			@clickAnswerCard="showAnswer=true"
+			@prevBtnClick="handlePrevNextClick(false)"
+			@nextBtnClick="handlePrevNextClick(true)"></test-footer>
 		<transition 
 			name="custom-defined-transition"
-			enter-active-class="animated slideInUp"
-			leave-active-class="animated slideOutDown">
+			enter-active-class="animated bounceInUp"
+			leave-active-class="animated bounceOutDown">
 			<answer-card 
 				class="answer-card" 
 				:itemTheme="itemTheme"
 				:answerids="answerid"
 				v-show="showAnswer"
-				@answerClick="handleAnswerClicked">
-				<test-btn class="submit-btn"
-					@clickTestBtn="submitAnswer">
-					交卷并查看结果
-				</test-btn>	
+				@answerClick="handleAnswerClicked"
+				@closeAnsw="showAnswer=false">
+				<div class="btn-box">
+					<test-btn class="submit-btn first"
+						@clickTestBtn="submitAnswer">
+						交卷并查看结果
+					</test-btn>	
+					<test-btn class="submit-btn"
+						@clickTestBtn="showAnswer=false">
+						关闭答题卡
+					</test-btn>	
+				</div>
 			</answer-card>
 		</transition>	
 	</div>
@@ -69,7 +73,7 @@
 		name: 'TestItem',		
 		data () {
 			return {
-				title: '2018年资料员专业基础',
+				//title: '2018年资料员专业基础',
 				clockDown:'00:00:00',
 				asList:['A','B','C','D','E','F','G','H','I','J'],				
 				choosedId:[],
@@ -81,7 +85,7 @@
 		computed: {
 			...mapState(['itemNum','itemTheme','itemDetail','timer','showTime','answerid']),
 			pageTitle () {				
-				return this.title + this.itemNum + '/' + this.itemDetail.length
+				return this.itemTheme + this.itemNum + '/' + this.itemDetail.length
 			}
 		},
 		components: {
@@ -91,7 +95,7 @@
 			AnswerCard
 		},
 		methods: {
-			...mapActions(['addNum','changeNum','initializeData']),
+			...mapActions(['addNum','changeNum','remeberAnsw','resetData']),
 			choose (index,topic_id,topic_type,answ_id) {				
 				let curIndex = this.choosedId.indexOf(answ_id);				
 				if(curIndex>-1){
@@ -107,44 +111,26 @@
 					this.choosedId.shift();
 				}
 
-			},
-			nextItem () {				
-				if (this.choosedId.length>0) {
-					
-		  			this.addNum({
+				//记住答案
+				this.remeberAnsw({
 		  				topic_id:this.topicId,
 		  				topic_type:this.topicType,
 		  				answer_id:this.choosedId
 		  			});
-		  			//获取下一个题目和答案
-		  			let state_ = this.$store.state;
-					let num = state_.itemNum;
-					let currentItem = state_.itemDetail[num-1];
-					
-					this.choosedId = state_.answerid[currentItem.type].find((item,index)=>item.num===num).answer_id;
-					this.topicId = currentItem.topic_id;
-			  		this.topicType = currentItem.type;
-	  			}else{
-	  				alert('您还没有选择答案哦')
-	  			}
-			},
-			submitAnswer (isSub) {
-				if(isSub){//是否提交最后一题					
-
-					if (this.choosedId.length>0) {		  			
-			  			this.addNum({
-			  				topic_id:this.topicId,
-			  				topic_type:this.topicType,
-			  				answer_id:this.choosedId
-			  			});
-			  			this.confirmSubmit();			  			
-		  			}else{
-		  				alert('您还没有选择答案哦')
-		  			}
-				}else{
-					this.confirmSubmit();
-				}
+			},			
+			handlePrevNextClick (isAdd) {
+				this.addNum({isAdd});
+	  			//获取上下一个题目和答案
+	  			let state_ = this.$store.state;
+				let num = state_.itemNum;
+				let currentItem = state_.itemDetail[num-1];
 				
+				this.choosedId = state_.answerid[currentItem.type].find((item,index)=>item.num===num).answer_id;
+				this.topicId = currentItem.topic_id;
+		  		this.topicType = currentItem.type;
+			},
+			submitAnswer () {				
+				this.confirmSubmit();
 			},
 			confirmSubmit () {
 				if(this.answerid.len<this.itemNum){
@@ -153,8 +139,8 @@
 					}
 				}		
 				clearInterval(this.timer)
-		  		this.choosedId = []; 
-				this.$router.push('/scoreCard')
+		  		this.choosedId = []; 		  		
+				this.$router.push('/scoreCard/'+this.$route.params.prevUrl)
 			},
 			handleAnswerClicked (num,answers) {
 				this.showAnswer = false;
@@ -167,11 +153,13 @@
 		},
 		created () {
 			this.$store.commit('REMBER_TIME');
-			this.initializeData();
 		},
 		beforeRouteLeave (to, from, next) {
 			clearInterval(this.timer)
-			next()
+			if(confirm('提示：您尚未提交试卷，退出将无法在记录中查看试卷')){
+				this.resetData();
+				next();
+			}
 		}
 	}
 </script>
@@ -231,5 +219,21 @@
 	bottom: 0;
 	background: $color-white;
 	z-index: 1000;	
+}
+.btn-box{
+	border-top:1px solid $border-dark-grey;
+	display: flex;
+	padding-top: 1rem;
+	margin-top: .5rem;
+	.submit-btn{		
+		flex: 1;	
+	}
+	.submit-btn /deep/ .test-start-btn{
+		width: 80% !important;
+		margin-left: 10%;
+	}
+	.submit-btn.first /deep/ .test-start-btn{
+		background: $blue;
+	}
 }
 </style>

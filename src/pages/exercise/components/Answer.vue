@@ -3,6 +3,17 @@
 		<simple-header :title="itemTheme"></simple-header>
 		<div class="page-body">
 			<h4 class="item-type">
+				单项选择题
+			</h4>
+			<div class="item-answs">
+				<span class="as-item" 
+					v-for="(item,index) of answerids.ONE"
+					:key="index"
+					:class="{'selected':item.answer_id.length>0}"
+					@click="clickAnswer(item.num,item.answer_id)"
+				>{{item.num}}</span>
+			</div>
+			<h4 class="item-type">
 				多项选择题
 			</h4>
 			<div class="item-answs">
@@ -25,19 +36,12 @@
 					@click="clickAnswer(item.num,item.answer_id)"
 				>{{item.num}}</span>
 			</div>
-			<h4 class="item-type">
-				单项选择题
-			</h4>
-			<div class="item-answs">
-				<span class="as-item" 
-					v-for="(item,index) of answerids.ONE"
-					:key="index"
-					:class="{'selected':item.answer_id.length>0}"
-					@click="clickAnswer(item.num,item.answer_id)"
-				>{{item.num}}</span>
+			<div class="remark">
+				<p>注：蓝色背景代表改题目已答，白色背景代表尚未作答</p>
 			</div>
 		</div>
 		<slot></slot>
+		
 	</div>	
 </template>
 <script type="text/javascript">
@@ -56,6 +60,9 @@
 		methods: {
 			clickAnswer (num,answers) {				
 				this.$emit('answerClick',num,answers)
+			},
+			handleHeaderClick () {
+				this.$emit('closeAnsw');
 			}
 		}
 	}
@@ -81,6 +88,7 @@
 			width:.7rem;
 			height: .7rem;
 			margin-right:.5rem;
+			margin-bottom:.5rem;
 			color: $color-grey;
 			font-size: $font24;
 			border:1px solid $color-grey;
@@ -95,13 +103,11 @@
 			}
 		}
 	}	
+	.remark{
+		font-size: $font16;
+		color: $color-grey;
+	}
 }
-.submit-btn{	
-	border-top:1px solid $border-dark-grey;
-	padding-top: 1rem;	
-}
-.submit-btn /deep/ .test-start-btn{
-	width: 80% !important;
-	margin-left: 10%;
-}
+
+
 </style>

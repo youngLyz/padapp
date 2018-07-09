@@ -1,5 +1,11 @@
 <template>	
 	<nav class="footer-nav">	
+		<div class="footer-link" 
+			@click="clickPrevItem"
+			:class="{'disable':itemNum===1}">
+			<span class="iconfont">&#xe64f;</span>
+			<span class="footer-text">上一题</span>
+		</div>
 		<div class="footer-link" @click="clickAnswerCard">
 			<span class="iconfont">&#xe644;</span>
 			<span class="footer-text">答题卡</span>
@@ -8,14 +14,30 @@
 			<span class="iconfont">&#xe616;</span>
 			<span class="footer-text">{{downClock}}</span>
 		</div>
+		<div class="footer-link" 
+			@click="clickNextItem"
+			:class="{'disable':itemNum===itemDetail.length}">
+			<span class="iconfont">&#xe8f0;</span>
+			<span class="footer-text">下一题</span>
+		</div>
 	</nav>
 </template>
 
 <script type="text/javascript">
+	import { mapState } from 'vuex'
 	export default {
 		name: 'TestFooter',
 		props:['downClock'],
+		computed: {
+			...mapState(['itemNum','itemDetail'])
+		},
 		methods: {
+			clickPrevItem () {
+				this.$emit('prevBtnClick')
+			},
+			clickNextItem() {
+				this.$emit('nextBtnClick')
+			},
 			clickAnswerCard () {
 				this.$emit('clickAnswerCard');
 			}
@@ -43,6 +65,10 @@
 		flex-direction: column;
 		&.active{
 			color: $blue;
+		}
+		&.disable{
+			color: $border-dark-grey;
+			cursor: not-allowed;
 		}
 		.iconfont{
 			font-size: $font30;

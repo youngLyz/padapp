@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<page-header :title="title"></page-header>
+		<page-header :title="title" :backUrl="backUrl"></page-header>
 		<div class="page-body">
 			<h2 class="test-title">2018年资料员专业基础知识试题一</h2>
 			<ul class="test-list">
@@ -11,17 +11,18 @@
 					试卷类型：模拟试题
 				</li>
 				<li class="test-list-item">
+					题型及量：单选题（30）多选题（20）判断题（20）
+				</li>
+				<li class="test-list-item">
 					作答时间：120分钟
 				</li>
 				<li class="test-list-item">
 					答案解析：否
 				</li>
-				<li class="test-list-item">
-					练习次数：3
-				</li>
+				
 			</ul>
 			<div class="test-btn">
-				<router-link to="/testItem" class="test-start-btn">开始做题</router-link>
+				<button type="button" @click="handleStartClick" class="test-start-btn">开始做题</button>
 			</div>
 			<div class="test-intro">
 				<h4 class="test-intro-hd">试卷简介</h4>
@@ -33,17 +34,40 @@
 </template>
 
 <script type="text/javascript">
-	import PageHeader from 'comp/Header'
-	
+	import PageHeader from 'comp/Header'	
 	export default {
 		name: 'TestStart',		
 		data () {
 			return {
-				title: '2018年资料员专业基础'		
+				title: '2018年资料员专业基础',
+				backUrl:'/exer',		
 			}
 		},
 		components: {
 			PageHeader
+		},
+		methods: {
+			handleStartClick () {
+				
+				let info = {
+					itemTheme:'',
+					itemDetail: []
+				};
+				//获取试卷标题和试题列表
+				this.$axios.get('/simulate.json').then(res=>{					
+					//console.log('axios get:'+JSON.stringify(res.data.status));
+					res = res.data;
+					if(res.status==='ok'){
+						info.itemTheme = res.data.itemTheme;
+						info.itemDetail = res.data.itemDetail;
+						this.$store.dispatch('initializeData',info);
+						this.$router.push('/testItem/simulateTest');
+					}
+				}).catch(err=>{
+					console.log('axios error:'+err)
+				});
+				
+			}
 		}
 	}
 </script>

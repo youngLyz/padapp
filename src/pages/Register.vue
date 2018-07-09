@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<page-header :title="title"></page-header>
+		<simple-header :title="title"></simple-header>
 		<div class="reg-body">
 			<form>
 				<form-input :obj="mobile"></form-input>
@@ -13,7 +13,7 @@
 					<router-link to="/" class="contract-link">《上学吧服务协议》</router-link>
 				</div>	
 				<div class="form-btn">
-					<button type="submit" class="submit-btn">注册</button>
+					<full-button name="注册" @skipNext="handleReigsterSubmit"></full-button>
 					<p>
 						<router-link class="to-login-btn" to="/login">已有账号，立即登录</router-link>
 					</p>
@@ -26,8 +26,9 @@
 </template>
 
 <script type="text/javascript">
-	import PageHeader from 'comp/Header'
+	import SimpleHeader from 'comp/SimpleHeader'
 	import FormInput from 'comp/Input'
+	import FullButton from 'comp/FullButton'
 	export default {
 		name: "UserRegister",
 		data () {
@@ -40,8 +41,14 @@
 			}
 		},
 		components: {
-			PageHeader,
-			FormInput
+			SimpleHeader,
+			FormInput,
+			FullButton
+		},
+		methods: {
+			handleReigsterSubmit () {
+				this.$router.openPage("/home",1);
+			}
 		}
 	}
 </script>

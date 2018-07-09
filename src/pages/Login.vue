@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<page-header :title="title"></page-header>
+		<simple-header :title="title"></simple-header>
 		<div class="log-body">
 			<form>
 				<form-input :obj="mobile"></form-input>
 				<form-input :obj="password"></form-input>
 				<div class="form-btn">
-					<button type="submit" class="submit-btn">登录</button>
+					<full-button name="登录" @skipNext="handleReigsterSubmit"></full-button>
 					<p class="login-link">
 						<router-link class="to-register-btn" to="/register">新用户注册</router-link>
 						<router-link class="to-forget-btn" to="/register">忘记密码？</router-link>
@@ -18,8 +18,9 @@
 </template>
 
 <script type="text/javascript">
-	import PageHeader from 'comp/Header'
+	import SimpleHeader from 'comp/SimpleHeader'
 	import FormInput from 'comp/Input'
+	import FullButton from 'comp/FullButton'
 	export default {
 		name: "UserLogin",
 		data () {
@@ -31,9 +32,17 @@
 		
 		},
 		components: {
-			PageHeader,
-			FormInput
+			SimpleHeader,
+			FormInput,
+			FullButton
+		},
+		methods: {
+			handleReigsterSubmit () {
+								
+				this.$router.openPage("/home",1);
+			}
 		}
+
 	}
 </script>
 
@@ -45,17 +54,7 @@
 .form-btn{
 	width:60%;
 	margin: 1.3rem auto 0;
-	.submit-btn{
-		width: 90%;
-		height: 1.26rem;
-		line-height: 1.26rem;
-		border-radius: 0.63rem;
-		margin-left: 5%;
-		font-size: $font24;
-		color: $color-white;
-		background: $blue;
-		box-shadow: 1px 5px 3px rgba(0,0,0,.3);
-	}
+	
 	.login-link{
 		margin-top: .75rem;
 		.to-register-btn{

@@ -31,7 +31,7 @@ export default {
 			}else if(allSecs<3600){
 				let mm = Math.floor(allSecs/60);
 				let ss = allSecs-mm*60;
-				state.showTime = formatTime(mm)+':'+formatTime(ss);
+				state.showTime = '00:' + formatTime(mm)+':'+formatTime(ss);
 			}else {
 				let hh = Math.floor(allSecs/3600);
 				let mm = Math.floor((allSecs-hh*3600)/60);
@@ -50,10 +50,12 @@ export default {
 	/*
 	初始化信息，
 	 */
-	initializeData(state) {
+	initializeData(state,payload) {
 		state.itemNum = 1;
 		state.allTime = 0;
 		state.showTime = '00:00:00';
+		state.itemTheme = payload.itemTheme;
+		state.itemDetail = payload.itemDetail;
 		//答题卡
 		let ones = [],mores = [],tfng = [];
 		state.itemDetail.forEach((item,index) =>{
@@ -81,5 +83,15 @@ export default {
 	setCurrentClaz(state,payload) {
 		state.firstClz = payload.firstClz;
 		state.secondClz = payload.secondClz;
+	},
+	resetData (state) {
+		state.itemTheme = '';
+		state.itemDetail = [];
+		state.answerid.ONE = [];
+		state.answerid.MORE = [];
+		state.answerid.TFNG = [];
+		state.showTime = '00:00:00';
+		state.itemNum = 1;
+		state.allTime = 0;
 	}
 }

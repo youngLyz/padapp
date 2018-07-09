@@ -1,7 +1,7 @@
 <template>
 	
 	<div>
-		<page-header :title="title"></page-header>
+		<page-header :title="title" :backUrl="backUrl"></page-header>
 		<div class="select-body">
 			<h2 class="select-title">选择测试题型</h2>
 			<select-type @selectedType="handleSeleted"></select-type>
@@ -21,6 +21,7 @@
 		data () {
 			return {
 				title: '快速练习',
+				backUrl:'/exer',
 				selected: ''	
 			}
 		},
@@ -36,7 +37,23 @@
 		},
 		methods: {			
 			handleBtnClick () {
-				console.log('click fast test')
+				let info = {
+					itemTheme:'',
+					itemDetail: []
+				};
+				//获取试卷标题和试题列表
+				this.$axios.get('/fastTest.json').then(res=>{					
+					res = res.data;
+					if(res.status==='ok'){
+						info.itemTheme = res.data.itemTheme;
+						info.itemDetail = res.data.itemDetail;
+						this.$store.dispatch('initializeData',info);
+						this.$router.push('/testItem/fastTest');
+					}
+				}).catch(err=>{
+					console.log('axios error:'+err)
+				});
+				
 			},
 			handleSeleted (type) {
 				this.selected = type;

@@ -13,7 +13,7 @@ export default {
   	  return {
   	    transitionName : 'slide-left'
   	  }
-  	},
+  	}/*,
   	beforeRouteUpdate (to, from, next) {
   		console.log("beforeRouteUpdate:")
   		let isBack = this.$router.isBack;		
@@ -25,7 +25,7 @@ export default {
           }
           this.$router.isBack = false
           next()
-  	}	
+  	}	*/
   }
 </script>
 

@@ -59,7 +59,7 @@
 		data () {
 			return {
 				title:this.$store.state.itemTheme+"答题结果",
-				backUrl:"/simulateTest",
+				backUrl: "/"+this.$route.params.prevUrl,
 				currentTime: '2018-07-06 10:34'
 			}
 		},

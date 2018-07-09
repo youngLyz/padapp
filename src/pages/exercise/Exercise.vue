@@ -4,23 +4,22 @@
 			:title="title"
 			></exer-header>
 		<div class="answer-info">
-			<p class="answer-tip">已答套数</p>
+			<p class="answer-tip">已答题数</p>
 			<p class="answer-value">0</p>
+			<p class="answer-total">总题数：1000</p>
 		</div>
 		<div class="icon-list">
 			<exer-icon 
 				v-for="(item,index) of iconList"
 				:iconObj="item"
 				:key="index"></exer-icon>
-		</div>
-		<home-footer></home-footer>
+		</div>		
 	</div>
 </template>
 
 <script type="text/javascript">
 	import ExerHeader from './components/Header'
 	import ExerIcon from './components/Icon'
-	import HomeFooter from 'comp/Footer'	
 	export default {
 		name: 'Exercise',
 		data () {
@@ -38,8 +37,7 @@
 			
 		components: {
 			ExerHeader,
-			ExerIcon,
-			HomeFooter
+			ExerIcon
 		},
 		methods: {
 			
@@ -70,6 +68,12 @@
 	.answer-value{
 		font-size: $font36;
 		text-align: center;
+	}
+	.answer-total{
+		position: absolute;
+		bottom:.7rem;
+		right: .7rem;
+		font-size: $font18;
 	}
 }
 .icon-list{

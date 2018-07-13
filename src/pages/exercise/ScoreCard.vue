@@ -136,6 +136,7 @@
 			width:.7rem;
 			height: .7rem;
 			margin-right:.5rem;
+			margin-bottom:.25rem;
 			color: $color-grey;
 			font-size: $font24;
 			border:1px solid $color-grey;

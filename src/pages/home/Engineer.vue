@@ -27,7 +27,6 @@
 
 			}
 		},
-
 		methods: {
 			...mapActions(['setCurrentClaz']),
 			handleEngiClick (firstClz,secondClz) {

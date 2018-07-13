@@ -29,6 +29,12 @@ export default {
 	},
 	resetData ({ commit }) {
 		commit('resetData')
+	},
+	clockDown ({ commit }) {
+		commit('clockDown')
+	},
+	examEndClock ({ commit }) {
+		commit('examEndClock')
 	}
 
 }

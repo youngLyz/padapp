@@ -83,9 +83,21 @@
 			}
 		},
 		computed: {
-			...mapState(['itemNum','itemTheme','itemDetail','timer','showTime','answerid']),
+			...mapState(['itemNum','itemTheme','itemDetail','timer','showTime','answerid','examState']),
 			pageTitle () {				
 				return this.itemTheme + this.itemNum + '/' + this.itemDetail.length
+			}
+		},
+		watch: {
+			examState: function (val,oldVal){//观察考试状态，过了考试时间则自动退出
+				if(!val){
+					console.log("force submit"+JSON.stringify(this.$store.state.answerid));
+					if(this.$route.params.prevUrl==='examStart'){//考试
+						this.$router.push("/exam");		
+					}else{
+						this.$router.push("/testStart");//模拟考试
+					}					
+				}				
 			}
 		},
 		components: {
@@ -151,15 +163,32 @@
 		  		this.topicType = state_.itemDetail[num-1].type
 			}
 		},
-		created () {
-			this.$store.commit('REMBER_TIME');
-		},
-		beforeRouteLeave (to, from, next) {
-			clearInterval(this.timer)
-			if(confirm('提示：您尚未提交试卷，退出将无法在记录中查看试卷')){
-				this.resetData();
+		beforeRouteLeave (to, from, next) {	
+			
+			if(to.path.indexOf('testStart')>-1){//模拟考试
+				if(!this.examState){//考试时间到，直接退出考试				
+					//加提示
+					next();
+				}else{//考试中，手动退出提示
+					if(confirm('提示：您尚未提交试卷，退出将无法在记录中查看试卷')){
+						clearInterval(this.timer);
+						next();	
+					}	
+				}
+				
+			}else if(to.path.indexOf('exam')>-1){//真实考试	
+				if(!this.examState){
+					//提示
+					next()
+				}else{
+					alert('提示：您尚未提交试卷，请提交试卷后退出')
+					console.log("force submit"+JSON.stringify(this.$store.state.answerid));	
+				}
+			}else{//其他考试，自动退出
 				next();
-			}
+			}	
+		
+			
 		}
 	}
 </script>

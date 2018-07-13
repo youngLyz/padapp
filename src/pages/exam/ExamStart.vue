@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<page-header :title="title" :backUrl="backUrl"></page-header>
+		<page-header :title="title"></page-header>
 		<div class="page-body">
-			<h2 class="test-title">2018年资料员专业基础知识试题一</h2>
+			<h2 class="test-title">2018年资料员专业考试</h2>
 			<ul class="test-list">
 				<li class="test-list-item">
 					卷面总分：100分
@@ -36,11 +36,11 @@
 <script type="text/javascript">
 	import PageHeader from 'comp/Header'	
 	export default {
-		name: 'TestStart',		
+		name: 'ExamStart',		
 		data () {
 			return {
 				title: '2018年资料员专业基础',
-				backUrl:'/simulateTest',		
+				hideBtn:false					
 			}
 		},
 		components: {
@@ -61,8 +61,7 @@
 						info.itemTheme = res.data.itemTheme;
 						info.itemDetail = res.data.itemDetail;
 						this.$store.dispatch('initializeData',info);
-						this.$store.commit('REMBER_TIME');//开始计时
-						this.$router.push('/testItem/simulateTest');
+						this.$router.push('/testItem/examStart');
 					}
 				}).catch(err=>{
 					console.log('axios error:'+err)

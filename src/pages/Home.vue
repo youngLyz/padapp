@@ -45,14 +45,19 @@
 			SimpleHeader,
 			HomeSwiper,
 			Engineer
+		},
+		created () {
+			this.$store.commit('clockDown');//启动考试倒计时
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+
 .engineer-list{
 	overflow:hidden;
 	margin-bottom: 1.9rem;
+	@include border-top;
 	.engineer-box{
 		width:50%;
 		float: left;		

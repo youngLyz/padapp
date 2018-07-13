@@ -50,19 +50,23 @@ export default new Router({
           path: '/userCenter',
           name: 'UserCenter',
           component: UserCenter
-        },
+        },        
          {
           path: '/read',
           name: 'Read',
           component: Read
-        },
-         {
+        } ,
+        {
           path: '/exam',
           name: 'Exam',
           component: Exam
         }
       ]
-    },  
+    }, 
+         {
+          path:'/examStart',
+          component: r =>require.ensure([],() =>r(require('../pages/exam/ExamStart')),'ExamStart')
+        },
         {
           path:'/fastTest',
           component: r =>require.ensure([],() =>r(require('../pages/exercise/FastTest')),'FastTest')
@@ -90,6 +94,10 @@ export default new Router({
          {
           path:'/testHis',
           component: r =>require.ensure([],() =>r(require('../pages/exercise/TestHis')),'TestHis')
+        },
+        {
+          path:'/testHisItem',
+          component: r =>require.ensure([],() =>r(require('../pages/exercise/TestHisItem')),'TestHisItem')
         },
         {
           path:'/wrongTest',
@@ -126,6 +134,14 @@ export default new Router({
     {
       path: '/setting',
       component: r =>require.ensure([],() =>r(require('../pages/userCenter/Setting')),'UserSetting')
+    },
+    {
+      path: '/myWrong',      
+      component: r =>require.ensure([],() =>r(require('../pages/userCenter/MyWrong')),'MyWrong')
+    },
+    {
+      path: '/myWrongDetail/:id',      
+      component: r =>require.ensure([],() =>r(require('../pages/userCenter/MyWrongDetail')),'MyWrongDetail')
     }
         
   ],

@@ -6,10 +6,15 @@
 				<li class="list-item"
 					v-for="(item,index) of list"
 					:key="item.id">
-					<router-link to="/testStart" class="list-item-link">
+					<router-link 
+						to="/testStart" 
+						class="list-item-link">
 						{{item.title}}
 					</router-link>
-					<router-link v-show="item.status==1" to="/testStart" class="list-item-asw">
+					<router-link 
+						v-show="item.status==1" 
+						to="/testStart" 
+						class="list-item-asw">
 						查看答案
 					</router-link>
 				</li>

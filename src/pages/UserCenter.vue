@@ -7,12 +7,12 @@
 					187****6321		
 					<span class="iconfont right">&#xe8f0;</span>
 				</router-link>
-				<router-link tag="li" to="/userInfo" class="point-item">
+				<router-link tag="li" to="/testHis" class="point-item">
 					<span class="iconfont left">&#xe61c;</span>
 					测试历史		
 					<span class="iconfont right">&#xe8f0;</span>
 				</router-link>
-				<router-link tag="li" to="/userInfo" class="point-item">
+				<router-link tag="li" to="/myWrong" class="point-item">
 					<span class="iconfont left">&#xe647;</span>
 					我的错题		
 					<span class="iconfont right">&#xe8f0;</span>

@@ -37,22 +37,39 @@
 		},
 		methods: {			
 			handleBtnClick () {
+				
+				let itemList = [{	
+						id:1,
+						q_name:'单选试题名称',
+						q_type:'1',//类型：单选-1、多选-2、判断-3		
+						q_result:[1],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B','选项C','选项D']
+					},
+					{	id:2,
+						q_name:'多选试题名称',
+						q_type:'2',//类型：单选-1、多选-2、判断-3		
+						q_result:[1,2],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B','选项C','选项D']
+					},
+					{	id:3,
+						q_name:'判断试题名称',
+						q_type:'3',//类型：单选-1、多选-2、判断-3		
+						q_result:[1],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B']
+					}]
+
 				let info = {
-					itemTheme:'',
-					itemDetail: []
+					itemTheme:this.title,
+					totalScore:itemList.length,
+					scorePrinciple:{
+						single_score:1,
+						multi_score:1,
+						tf_score:1
+					},
+					itemDetail: itemList
 				};
-				//获取试卷标题和试题列表
-				this.$axios.get('/wrong.json').then(res=>{					
-					res = res.data;
-					if(res.status==='ok'){
-						info.itemTheme = res.data.itemTheme;
-						info.itemDetail = res.data.itemDetail;
-						this.$store.dispatch('initializeData',info);
-						this.$router.push('/testItem/wrongTest');
-					}
-				}).catch(err=>{
-					console.log('axios error:'+err)
-				});
+				this.$store.dispatch('initializeData',info);
+				this.$router.push('/testItem/wrongTest');
 				
 			},
 			handleSeleted (type) {

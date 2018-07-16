@@ -6,11 +6,12 @@ import axios from './components/plugins/axios'
 import './assets/css/reset.css'
 import './assets/css/iconfont/iconfont.css'
 import animate from 'animate.css'
+import tools from 'js/tools.js'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 Vue.use(axios)
-
+Vue.use(tools)
 new Vue({
   el: '#app',
   router,

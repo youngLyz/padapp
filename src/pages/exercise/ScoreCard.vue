@@ -4,8 +4,8 @@
 		<div class="page-body">
 			<div class="score-box">
 				<div class="score-circle">
-					<span class="score-cur">20.0</span>
-					<span class="score-total">总分数 100.0</span>
+					<span class="score-cur">{{score}}</span>
+					<span class="score-total">总分数 {{totalScore}}</span>
 				</div>
 				<p class="score-date">结果生成时间：{{currentTime}}</p>
 			</div>
@@ -16,14 +16,24 @@
 				</div>
 				<div class="answer-list">
 					<h4 class="item-type">
+						单项选择题
+					</h4>
+					<div class="item-answs">
+						<span class="as-item" 
+							v-for="(item,index) of answerid['1']"
+							:key="index"
+							:class="{'selected':item.answer_id.length>0,'error':item.res==0,'warn':item.res==1}"	
+						>{{item.num}}</span>
+					</div>
+					<h4 class="item-type">
 						多项选择题
 					</h4>
 					<div class="item-answs">
 						<span
 							class="as-item" 
-							v-for="(item,index) of answerid.MORE"
+							v-for="(item,index) of answerid['2']"
 							:key="index"
-							:class="{'selected':item.answer_id.length>0}"					
+							:class="{'selected':item.answer_id.length>0,'error':item.res==0,'warn':item.res==1}"	
 						>{{item.num}}</span>
 					</div>
 					<h4 class="item-type">
@@ -31,21 +41,12 @@
 					</h4>
 					<div class="item-answs">
 						<span class="as-item" 
-							v-for="(item,index) of answerid.TFNG"
+							v-for="(item,index) of answerid['3']"
 							:key="index"
-							:class="{'selected':item.answer_id.length>0}"					
+							:class="{'selected':item.answer_id.length>0,'error':item.res==0,'warn':item.res==1}"	
 						>{{item.num}}</span>
 					</div>
-					<h4 class="item-type">
-						单项选择题
-					</h4>
-					<div class="item-answs">
-						<span class="as-item" 
-							v-for="(item,index) of answerid.ONE"
-							:key="index"
-							:class="{'selected':item.answer_id.length>0}"						
-						>{{item.num}}</span>
-					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -60,14 +61,14 @@
 			return {
 				title:this.$store.state.itemTheme+"答题结果",
 				backUrl: "/"+this.$route.params.prevUrl,
-				currentTime: '2018-07-06 10:34'
+				currentTime: this.formatDate(new Date())
 			}
 		},
 		components: {
 			PageHeader
 		},
 		computed: {
-			...mapState(['answerid'])
+			...mapState(['answerid','totalScore','score'])
 		}
 	}
 </script>
@@ -135,10 +136,11 @@
 		.as-item{
 			width:.7rem;
 			height: .7rem;
+			line-height: .7rem;
 			margin-right:.5rem;
 			margin-bottom:.25rem;
 			color: $color-grey;
-			font-size: $font24;
+			font-size: $font18;
 			border:1px solid $color-grey;
 			border-radius: 50%;
 			display: inline-block;
@@ -146,8 +148,17 @@
 			&.selected{				
 				color: $color-white;
 				background: $blue;
-				border:1px solid $blue;
-				
+				border:1px solid $blue;				
+			}
+			&.error{				
+				color: $color-white;
+				background: $color-red;
+				border:1px solid $color-red;				
+			}
+			&.warn{				
+				color: $color-white;
+				background: $color-orange;
+				border:1px solid $color-orange;				
 			}
 		}
 	}	

@@ -3,26 +3,26 @@
 		<page-header :title="pageTitle"></page-header>
 		<div class="page-body">
 			<h2 class="test-title">
-				<span class="test-type">{{itemNum}}[{{itemDetail[itemNum-1].type_name}}]</span>
+				<span class="test-type">{{itemNum}}[{{itemType}}]</span>
 				{{itemTheme}}
 			</h2>
 			<ul class="test-list">
 				<li class="test-list-item descrip">
-					{{itemDetail[itemNum-1].topic_name}}
+					{{itemDetail[itemNum-1].q_name}}
 				</li>
 				<li><h4 class="test-tip">选项</h4></li>
 				<li class="test-list-item" 
-					v-for="(item,index) of itemDetail[itemNum-1].topic_answer"
+					v-for="(item,index) of itemDetail[itemNum-1].q_option"
 					:key="item.topic_answer_id"
-					v-bind:class="{'selected':choosedId.indexOf(item.topic_answer_id)>-1}"
-					@click="choose(index,item.topic_id,itemDetail[itemNum-1].type,item.topic_answer_id)">
+					v-bind:class="{'selected':choosedId.indexOf(index+1)>-1}"
+					@click="choose(index,item.id,itemDetail[itemNum-1].q_type)">
 					<button 
 						type="button" 
 						class="test-option-btn"
 						>
 						{{asList[index]}}						
 					</button>
-					{{item.answer_name}}
+					{{item}}
 				</li>				
 			</ul>			
 			<test-btn 
@@ -77,6 +77,7 @@
 				clockDown:'00:00:00',
 				asList:['A','B','C','D','E','F','G','H','I','J'],				
 				choosedId:[],
+				typeArr:['单选题','多选题','判断题'],
 				topicId: null,
 				topicType:null,				
 				showAnswer:false				
@@ -86,7 +87,11 @@
 			...mapState(['itemNum','itemTheme','itemDetail','timer','showTime','answerid','examState']),
 			pageTitle () {				
 				return this.itemTheme + this.itemNum + '/' + this.itemDetail.length
-			}
+			},
+			itemType() {
+				let qt = this.itemDetail[this.itemNum-1].q_type;
+				return this.typeArr[qt-1];
+			},
 		},
 		watch: {
 			examState: function (val,oldVal){//观察考试状态，过了考试时间则自动退出
@@ -107,18 +112,19 @@
 			AnswerCard
 		},
 		methods: {
-			...mapActions(['addNum','changeNum','remeberAnsw','resetData']),
-			choose (index,topic_id,topic_type,answ_id) {				
-				let curIndex = this.choosedId.indexOf(answ_id);				
-				if(curIndex>-1){
+			...mapActions(['addNum','changeNum','remeberAnsw','computeScore']),
+			choose (index,topic_id,topic_type) {	
+				let ans_id = index+1;			
+				let curIndex = this.choosedId.indexOf(ans_id);	//判断当前答案的id是否被选中
+				if(curIndex>-1){//被选中，则删除
 					this.choosedId.splice(curIndex,1);
-				}else{					
+				}else{//未选中，添加
 					this.topicId = topic_id;
 					this.topicType = topic_type;
-					this.choosedId.push(answ_id);
+					this.choosedId.push(ans_id);
 				}
 
-				if(this.choosedId.length>1&&(topic_type==='ONE'||topic_type==='TFNG')){
+				if(this.choosedId.length>1&&(topic_type==='1'||topic_type==='3')){
 				//单选和判断，将上次选择的数据删除
 					this.choosedId.shift();
 				}
@@ -137,21 +143,27 @@
 				let num = state_.itemNum;
 				let currentItem = state_.itemDetail[num-1];
 				
-				this.choosedId = state_.answerid[currentItem.type].find((item,index)=>item.num===num).answer_id;
-				this.topicId = currentItem.topic_id;
-		  		this.topicType = currentItem.type;
+				this.choosedId = state_.answerid[currentItem.q_type].find((item,index)=>item.num===num).answer_id;
+				this.topicId = currentItem.id;
+		  		this.topicType = currentItem.q_type;
 			},
 			submitAnswer () {				
 				this.confirmSubmit();
 			},
 			confirmSubmit () {
-				if(this.answerid.len<this.itemNum){
+				let ansArr = this.answerid['1'].concat(this.answerid['2'],this.answerid['3']);
+				let notAll = ansArr.some((item,index)=>{
+								return item.answer_id.length==0
+							});
+				console.log("confirmSubmit:"+notAll);
+				if(notAll){
 					if(!confirm('您还有别的题没有答哦，您确认要提交吗？')){
 						return;
 					}
 				}		
 				clearInterval(this.timer)
-		  		this.choosedId = []; 		  		
+		  		this.choosedId = [];
+		  		this.computeScore();
 				this.$router.push('/scoreCard/'+this.$route.params.prevUrl)
 			},
 			handleAnswerClicked (num,answers) {
@@ -159,8 +171,8 @@
 				this.changeNum(num);//跳转到当前题号，获取原来存储的题目和答案
 				let state_ = this.$store.state;				
 				this.choosedId = answers;
-				this.topicId = state_.itemDetail[num-1].topic_id
-		  		this.topicType = state_.itemDetail[num-1].type
+				this.topicId = state_.itemDetail[num-1].id
+		  		this.topicType = state_.itemDetail[num-1].q_type
 			}
 		},
 		beforeRouteLeave (to, from, next) {	

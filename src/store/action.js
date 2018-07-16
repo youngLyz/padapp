@@ -27,14 +27,15 @@ export default {
 	setCurrentClaz({commit,state},payload) {
 		commit('setCurrentClaz',payload)
 	},
-	resetData ({ commit }) {
-		commit('resetData')
-	},
+	
 	clockDown ({ commit }) {
 		commit('clockDown')
 	},
 	examEndClock ({ commit }) {
 		commit('examEndClock')
+	},
+	computeScore ({ commit }) {
+		commit('computeScore')
 	}
 
 }

@@ -7,16 +7,16 @@
 					v-for="(item,index) of list"
 					:key="item.id">
 					<router-link 
-						to="/testStart" 
+						:to="'/testStart/'+item.id" 
 						class="list-item-link">
-						{{item.title}}
+						{{item.pt_name}}
 					</router-link>
-					<router-link 
-						v-show="item.status==1" 
-						to="/testStart" 
-						class="list-item-asw">
+					<button
+						v-show="item.status==1" 					
+						class="list-item-asw"
+						@click="handleTestAnswer(item.id,item.pt_name)">
 						查看答案
-					</router-link>
+					</button>
 				</li>
 				
 			</ul>			
@@ -35,16 +35,51 @@
 				title: '模拟考场',
 				backUrl:'/exer',
 				list:[
-					{id:1,title:'2018年资料员专业基础知识试题一',status:1},
-					{id:2,title:'2018年资料员专业基础知识试题二',status:0},
-					{id:3,title:'2018年资料员专业基础知识试题三',status:0},
-					{id:4,title:'2018年资料员专业基础知识试题四',status:0},
-					{id:5,title:'2018年资料员专业基础知识试题五',status:0}
+					{id:1,pt_name:'2018年资料员专业基础知识试题一',status:1},
+					{id:2,pt_name:'2018年资料员专业基础知识试题二',status:0},
+					{id:3,pt_name:'2018年资料员专业基础知识试题三',status:0},
+					{id:4,pt_name:'2018年资料员专业基础知识试题四',status:0},
+					{id:5,pt_name:'2018年资料员专业基础知识试题五',status:0}
 				]
 			}
 		},
 		components: {
 			PageHeader
+		},
+		methods: {
+			handleTestAnswer(paperId,paperName){
+				//paperId试卷id
+				//根据试卷id获取试题列表
+				//getSimulateTestItems?ptId=paperId
+				let itemList = [{	
+						id:1,
+						q_name:'单选试题名称',
+						q_type:'1',//类型：单选-1、多选-2、判断-3		
+						q_result:[1],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B','选项C','选项D']
+					},
+					{	id:2,
+						q_name:'多选试题名称',
+						q_type:'2',//类型：单选-1、多选-2、判断-3		
+						q_result:[1,2],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B','选项C','选项D']
+					},
+					{	id:3,
+						q_name:'判断试题名称',
+						q_type:'3',//类型：单选-1、多选-2、判断-3		
+						q_result:[1],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B']
+					}]
+
+				let info = {
+					itemTheme:paperName,
+					itemDetail: itemList
+				};
+
+				this.$store.dispatch('initializeData',info);						
+				this.$router.push('/testHisItem');
+				
+			}
 		}
 	}
 </script>

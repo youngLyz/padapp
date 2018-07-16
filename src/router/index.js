@@ -72,7 +72,7 @@ export default new Router({
           component: r =>require.ensure([],() =>r(require('../pages/exercise/FastTest')),'FastTest')
         },
         {
-          path:'/testStart',
+          path:'/testStart/:pt_id',
           component: r =>require.ensure([],() =>r(require('../pages/exercise/TestStart')),'TestStart')
         },
         {

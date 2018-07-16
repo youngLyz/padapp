@@ -3,18 +3,18 @@
 		<page-header :title="pageTitle"></page-header>
 		<div class="page-body">
 			<h2 class="test-title">
-				<span class="test-type">{{itemNum}}[{{itemDetail[itemNum-1].type_name}}]</span>
+				<span class="test-type">{{itemNum}}[{{itemType}}]</span>
 				{{itemTheme}}
 			</h2>
 			<ul class="test-list">
 				<li class="test-list-item descrip">
-					{{itemDetail[itemNum-1].topic_name}}
+					{{itemDetail[itemNum-1].q_name}}
 				</li>
 				<li><h4 class="test-tip">选项</h4></li>
 				<li class="test-list-item" 
-					v-for="(item,index) of itemDetail[itemNum-1].topic_answer"
-					:key="item.topic_answer_id"
-					v-bind:class="{'selected':choosedId.indexOf(item.topic_answer_id)>-1}"
+					v-for="(item,index) of itemDetail[itemNum-1].q_option"
+					:key="index"
+					v-bind:class="{'selected':choosedId.indexOf(index+1)>-1}"
 				>
 					<button 
 						type="button" 
@@ -22,7 +22,7 @@
 						>
 						{{asList[index]}}						
 					</button>
-					{{item.answer_name}}
+					{{item}}
 				</li>				
 			</ul>
 			<div class="answer-descrip">
@@ -31,7 +31,7 @@
 					答案解析
 				</h4>
 				<div class="answer-info">
-					正确答案<span class="answer-color">{{itemDetail[itemNum-1].answer_ids}}</span>
+					正确答案<span class="answer-color">{{itemRes}}</span>
 				</div>
 			</div>								
 		</div>
@@ -53,16 +53,28 @@
 		name: 'TestHisItem',		
 		data () {
 			return {				
-				asList:['A','B','C','D','E','F','G','H','I','J'],				
-				choosedId:[],
-				topicId: null,
-				topicType:null				
+				asList:['A','B','C','D','E','F','G','H','I','J'],
+				typeArr:['单选题','多选题','判断题']				
 			}
 		},
 		computed: {
 			...mapState(['itemNum','itemTheme','itemDetail','timer','showTime','answerid']),
 			pageTitle () {				
 				return this.itemTheme + this.itemNum + '/' + this.itemDetail.length
+			},			
+			itemType() {
+				let qt = this.itemDetail[this.itemNum-1].q_type;
+				return this.typeArr[qt-1];
+			},
+			itemRes() {
+				let res = this.itemDetail[this.itemNum-1].q_result;
+				let str =  res.map((item,index)=>{					
+					return this.asList[item-1]
+				});				
+				return str.join(",");
+			},
+			choosedId () {
+				return this.itemDetail[this.itemNum-1].answer_ids||[];
 			}
 		},
 		components: {
@@ -74,14 +86,16 @@
 			...mapActions(['addNum']),				
 			handlePrevNextClick (isAdd) {
 				this.addNum({isAdd});
-	  			//获取上下一个题目和答案
+	  			/*//获取上下一个题目和答案
 	  			let state_ = this.$store.state;
 				let num = state_.itemNum;
 				let currentItem = state_.itemDetail[num-1];
-				
-				this.choosedId = state_.answerid[currentItem.type].find((item,index)=>item.num===num).answer_id;
-				this.topicId = currentItem.topic_id;
-		  		this.topicType = currentItem.type;
+				//显示标准答案
+				let ansItem = state_.answerid[currentItem.q_type]
+										.find((item,index)=>item.num===num);
+				this.choosedId = ansItem.answer_id;
+				this.id = currentItem.id;
+		  		this.q_type = currentItem.q_type;*/
 			}
 		}
 	}

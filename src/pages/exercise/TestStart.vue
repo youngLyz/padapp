@@ -2,19 +2,19 @@
 	<div>
 		<page-header :title="title" :backUrl="backUrl"></page-header>
 		<div class="page-body">
-			<h2 class="test-title">2018年资料员专业基础知识试题一</h2>
+			<h2 class="test-title">{{pt_info.pt_name}}</h2>
 			<ul class="test-list">
 				<li class="test-list-item">
-					卷面总分：100分
+					卷面总分：{{pt_info.score}}分
 				</li>
 				<li class="test-list-item">
 					试卷类型：模拟试题
 				</li>
 				<li class="test-list-item">
-					题型及量：单选题（30）多选题（20）判断题（20）
+					题型及量：{{pt_info.type_num}}
 				</li>
 				<li class="test-list-item">
-					作答时间：120分钟
+					作答时间：{{pt_info.answer_time}}分钟
 				</li>
 				<li class="test-list-item">
 					答案解析：否
@@ -40,7 +40,9 @@
 		data () {
 			return {
 				title: '2018年资料员专业基础',
-				backUrl:'/simulateTest',		
+				backUrl:'/simulateTest',
+				pt_id:this.$route.params.pt_id,
+				pt_info: null
 			}
 		},
 		components: {
@@ -48,26 +50,57 @@
 		},
 		methods: {
 			handleStartClick () {
-				
+				//根据获取试卷信息和试题列表
+				let itemList = [{	
+						id:1,
+						q_name:'单选试题名称',
+						q_type:'1',//类型：单选-1、多选-2、判断-3		
+						q_result:[1],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B','选项C','选项D']
+					},
+					{	id:2,
+						q_name:'多选试题名称',
+						q_type:'2',//类型：单选-1、多选-2、判断-3		
+						q_result:[1,2],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B','选项C','选项D']
+					},
+					{	id:3,
+						q_name:'判断试题名称',
+						q_type:'3',//类型：单选-1、多选-2、判断-3		
+						q_result:[1],//1,2,3,4对应ABCD
+						q_option:['选项A','选项B']
+					}]
+
 				let info = {
-					itemTheme:'',
-					itemDetail: []
+					itemTheme:this.pt_info.pt_name,
+					totalScore:this.pt_info.total_score,
+					scorePrinciple:{
+						single_score:this.pt_info.pt_single_score,
+						multi_score:this.pt_info.pt_multi_score,
+						tf_score:this.pt_info.pt_tf_score
+					},
+					itemDetail: itemList
 				};
-				//获取试卷标题和试题列表
-				this.$axios.get('/simulateTest.json').then(res=>{					
-					//console.log('axios get:'+JSON.stringify(res.data.status));
-					res = res.data;
-					if(res.status==='ok'){
-						info.itemTheme = res.data.itemTheme;
-						info.itemDetail = res.data.itemDetail;
-						this.$store.dispatch('initializeData',info);
-						this.$store.commit('REMBER_TIME');//开始计时
-						this.$router.push('/testItem/simulateTest');
-					}
-				}).catch(err=>{
-					console.log('axios error:'+err)
-				});
-				
+
+				this.$store.dispatch('initializeData',info);
+				this.$store.commit('REMBER_TIME');//开始计时
+				this.$router.push('/testItem/simulateTest');
+			}
+		},
+		mounted () {
+			console.log(this.pt_id)
+			//获取试卷信息
+			this.pt_info = {
+				pt_name:"2018年资料员专业基础知识试题一",				
+				pt_single_num:30,
+				pt_single_score:1,
+				pt_multi_num:20,
+				pt_multi_score:2,
+				pt_tf_num:20,
+				pt_tf_score:1.5,				
+				answer_time:"120",
+				type_num:"单选题（30）多选题（20）判断题（20）",
+				total_score:100
 			}
 		}
 	}

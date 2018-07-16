@@ -7,7 +7,7 @@
 			</h4>
 			<div class="item-answs">
 				<span class="as-item" 
-					v-for="(item,index) of answerids.ONE"
+					v-for="(item,index) of answerids['1']"
 					:key="index"
 					:class="{'selected':item.answer_id.length>0}"
 					@click="clickAnswer(item.num,item.answer_id)"
@@ -19,7 +19,7 @@
 			<div class="item-answs">
 				<span
 					class="as-item" 
-					v-for="(item,index) of answerids.MORE"
+					v-for="(item,index) of answerids['2']"
 					:key="index"
 					:class="{'selected':item.answer_id.length>0}"
 					@click="clickAnswer(item.num,item.answer_id)"
@@ -30,7 +30,7 @@
 			</h4>
 			<div class="item-answs">
 				<span class="as-item" 
-					v-for="(item,index) of answerids.TFNG"
+					v-for="(item,index) of answerids['3']"
 					:key="index"
 					:class="{'selected':item.answer_id.length>0}"
 					@click="clickAnswer(item.num,item.answer_id)"

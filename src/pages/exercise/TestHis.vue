@@ -8,10 +8,10 @@
 					class="list-item"
 					v-for="(item,index) of list"
 					:key="item.id"
-					@click="handleHisClick(item.id)">
+					@click="handleHisClick(item.id,item.pt_name)">
 					<div class="list-item-hd">
 						<span class="list-item-title">
-							{{item.title}}
+							{{item.pt_name}}
 						</span>
 						<p class="list-item-info">
 							{{item.date}}
@@ -37,23 +37,23 @@
 				title: '测试记录',
 				list:[
 					{	id:1,
-						title:'2018年资料员专业基础知识试题一2018年资料员专业基础知识试题一',
+						pt_name:'2018年资料员专业基础知识试题一2018年资料员专业基础知识试题一',
 						date:'2018-07-11 10:10:32',
 						score:50},
 					{id:2,
-						title:'2018年资料员专业基础知识试题二',
+						pt_name:'2018年资料员专业基础知识试题二',
 						date:'2018-07-11 10:10:32',
 						score:50},
 					{id:3,
-						title:'2018年资料员专业基础知识试题三',
+						pt_name:'2018年资料员专业基础知识试题三',
 						date:'2018-07-11 10:10:32',
 						score:50},
 					{id:4,
-						title:'2018年资料员专业基础知识试题四',
+						pt_name:'2018年资料员专业基础知识试题四',
 						date:'2018-07-11 10:10:32',
 						score:50},
 					{id:5,
-						title:'2018年资料员专业基础知识试题五',
+						pt_name:'2018年资料员专业基础知识试题五',
 						date:'2018-07-11 10:10:32',
 						score:50}
 				]
@@ -63,24 +63,38 @@
 			PageHeader
 		},
 		methods: {
-			handleHisClick (paperId) {
-				let info = {
-					itemTheme:'',
-					itemDetail: []					
-				};
+			handleHisClick (paperId,paperName) {				
 				//获取试卷标题和试题列表
-				this.$axios.get('/simulate.json').then(res=>{					
-					//console.log('axios get:'+JSON.stringify(res.data.status));
-					res = res.data;
-					if(res.status==='ok'){
-						info.itemTheme = res.data.itemTheme;
-						info.itemDetail = res.data.itemDetail;
-						this.$store.dispatch('initializeData',info);
-						this.$router.push('/testHisItem');
-					}
-				}).catch(err=>{
-					console.log('axios error:'+err)
-				});
+				let itemList = [{	
+						id:1,
+						q_name:'单选试题名称',
+						q_type:'1',//类型：单选-1、多选-2、判断-3		
+						q_result:[1],//1,2,3,4对应ABCD
+						answer_ids:[2],
+						q_option:['选项A','选项B','选项C','选项D']
+					},
+					{	id:2,
+						q_name:'多选试题名称',
+						q_type:'2',//类型：单选-1、多选-2、判断-3		
+						q_result:[1,2],//1,2,3,4对应ABCD
+						answer_ids:[2,3],
+						q_option:['选项A','选项B','选项C','选项D']
+					},
+					{	id:3,
+						q_name:'判断试题名称',
+						q_type:'3',//类型：单选-1、多选-2、判断-3		
+						q_result:[1],//1,2,3,4对应ABCD
+						answer_ids:[1],
+						q_option:['选项A','选项B']
+					}];
+
+				let info = {
+					itemTheme:paperName,
+					itemDetail: itemList
+				};
+				this.$store.dispatch('initializeData',info);
+				this.$router.push('/testHisItem');
+				
 			}
 		}
 	}

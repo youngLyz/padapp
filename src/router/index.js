@@ -30,8 +30,8 @@ Router.prototype.openPage = function (link,order) {
 }
 Vue.use(Router)
 export default new Router({
-  mode: 'history',
-  base: '/dist',
+  //mode: 'history',
+ // base: 'padExam/pages',//导出后所在的根目录
   routes: [
     {
       path: '/',

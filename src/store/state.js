@@ -16,8 +16,8 @@ export default {
 		'3':[],
 		len:0
 	}, //答案id
-	examDate: "2018-07-13 15:15:00",//考试开始时间
-	examMinutes: "1",//考试时间分钟
+	examDate: "2018-07-20 14:30:00",//考试开始时间
+	examMinutes: "2",//考试时间分钟
 	examClock:"00天 00:00:00",
 	examtimer: null,//距离考试倒计时定时器
 	examState:false//考试状态，只在考试期间为true

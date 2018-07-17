@@ -23,8 +23,6 @@ export default {
 	 */
 	[REMBER_TIME](state) {//模拟考试计时
 		state.timer = setInterval(() => {
-			state.examState = true;//考试开始
-
 			let allSecs = ++state.allTime;			
 			if(allSecs<60){
 				state.showTime = '00:00:' + formatTime(allSecs);
@@ -184,5 +182,6 @@ export default {
 			}
 		})
 		state.score = score;
+		state.examState = false;//提交考试，不在考试状态
 	}
 }

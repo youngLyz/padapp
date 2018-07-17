@@ -5,7 +5,7 @@
 			<h2 class="test-title">{{pt_info.pt_name}}</h2>
 			<ul class="test-list">
 				<li class="test-list-item">
-					卷面总分：{{pt_info.score}}分
+					卷面总分：{{pt_info.total_score}}分
 				</li>
 				<li class="test-list-item">
 					试卷类型：模拟试题
@@ -26,7 +26,7 @@
 			</div>
 			<div class="test-intro">
 				<h4 class="test-intro-hd">试卷简介</h4>
-				<p>2018年资料员专业基础知识试题一，本试卷是为考资料员考试的考生准备的专业基础知识试题及答案练习。</p>
+				<p>{{pt_info.intro}}</p>
 			</div>
 		</div>
 		
@@ -87,7 +87,7 @@
 				this.$router.push('/testItem/simulateTest');
 			}
 		},
-		mounted () {
+		created () {
 			console.log(this.pt_id)
 			//获取试卷信息
 			this.pt_info = {
@@ -100,7 +100,8 @@
 				pt_tf_score:1.5,				
 				answer_time:"120",
 				type_num:"单选题（30）多选题（20）判断题（20）",
-				total_score:100
+				total_score:100,
+				intro:"2018年资料员专业基础知识试题一，本试卷是为考资料员考试的考生准备的专业基础知识试题及答案练习。"
 			}
 		}
 	}

@@ -24,7 +24,25 @@
 					</button>
 					{{item}}
 				</li>				
-			</ul>			
+			</ul>
+
+			
+			<div class="answer-descrip" v-show="ifCheckAnwer">
+				<button type="button" 
+					class="answer-check-btn"
+					v-show="!showCheckAnswer" 
+					@click="handleCheckAnswer">查看答案解析</button>
+				<div v-show="showCheckAnswer">
+					<h4 class="answer-hd">
+						<span class="iconfont answer-hd-icon">&#xe71b;</span>
+						答案解析
+					</h4>
+					<div class="answer-info">
+						正确答案<span class="answer-color">{{itemRes}}</span>
+					</div>
+				</div>	
+				
+			</div>		
 			<test-btn 
 				v-if="itemNum===itemDetail.length"
 				@clickTestBtn="submitAnswer">
@@ -80,7 +98,8 @@
 				typeArr:['单选题','多选题','判断题'],
 				topicId: null,
 				topicType:null,				
-				showAnswer:false				
+				showAnswer:false,
+				showCheckAnswer:false			
 			}
 		},
 		computed: {
@@ -92,15 +111,35 @@
 				let qt = this.itemDetail[this.itemNum-1].q_type;
 				return this.typeArr[qt-1];
 			},
+			itemRes() {
+				let res = this.itemDetail[this.itemNum-1].q_result;
+				let str =  res.map((item,index)=>{					
+					return this.asList[item-1]
+				});				
+				return str.join(",");
+			},
+			ifCheckAnwer () {
+				let path = this.$route.path;
+				//console.log(path);
+				
+				if(path.indexOf('simulateTest')>-1||path.indexOf('examStart')>-1){
+				//排除模拟考试，正常考试
+					return false;
+				}else{
+					return true
+				}
+			}
 		},
 		watch: {
-			examState: function (val,oldVal){//观察考试状态，过了考试时间则自动退出
+			examState: function (val,oldVal){//观察考试状态，过了考试时间或者提交试卷则自动跳转
 				if(!val){
+					//提交试题
 					console.log("force submit"+JSON.stringify(this.$store.state.answerid));
+
 					if(this.$route.params.prevUrl==='examStart'){//考试
 						this.$router.push("/exam");		
 					}else{
-						this.$router.push("/testStart");//模拟考试
+						this.$router.push('/scoreCard/'+this.$route.params.prevUrl);//模拟考试
 					}					
 				}				
 			}
@@ -146,6 +185,7 @@
 				this.choosedId = state_.answerid[currentItem.q_type].find((item,index)=>item.num===num).answer_id;
 				this.topicId = currentItem.id;
 		  		this.topicType = currentItem.q_type;
+		  		this.showCheckAnswer = false;
 			},
 			submitAnswer () {				
 				this.confirmSubmit();
@@ -164,7 +204,7 @@
 				clearInterval(this.timer)
 		  		this.choosedId = [];
 		  		this.computeScore();
-				this.$router.push('/scoreCard/'+this.$route.params.prevUrl)
+				//this.$router.push('/scoreCard/'+this.$route.params.prevUrl)
 			},
 			handleAnswerClicked (num,answers) {
 				this.showAnswer = false;
@@ -173,12 +213,15 @@
 				this.choosedId = answers;
 				this.topicId = state_.itemDetail[num-1].id
 		  		this.topicType = state_.itemDetail[num-1].q_type
+			},
+			handleCheckAnswer () {
+				this.showCheckAnswer = true;
 			}
 		},
 		beforeRouteLeave (to, from, next) {	
 			
 			if(to.path.indexOf('testStart')>-1){//模拟考试
-				if(!this.examState){//考试时间到，直接退出考试				
+				if(!this.examState){//考试状态变化，直接退出考试				
 					//加提示
 					next();
 				}else{//考试中，手动退出提示
@@ -189,13 +232,13 @@
 				}
 				
 			}else if(to.path.indexOf('exam')>-1){//真实考试	
-				if(!this.examState){
-					//提示
-					next()
-				}else{
-					alert('提示：您尚未提交试卷，请提交试卷后退出')
-					console.log("force submit"+JSON.stringify(this.$store.state.answerid));	
+				if(!this.examState){					
+					next()	
+				}else{//手动退出
+					alert("您尚未提交试卷，不能退出");
+					//console.log("force submit"+JSON.stringify(this.$store.state.answerid));	
 				}
+				
 			}else{//其他考试，自动退出
 				next();
 			}	
@@ -276,5 +319,36 @@
 	.submit-btn.first /deep/ .test-start-btn{
 		background: $blue;
 	}
+}
+.answer-check-btn{
+	width:60%;
+	height: 1rem;
+	line-height: 1rem;
+	color: $color-dark-grey;
+	font-size: $font18;
+	border:1px solid $border-dark-grey;
+	border-radius: .5rem;
+	margin-left: 20%;
+}
+.answer-descrip{
+	margin-top: .5rem;
+	padding-top: .5rem;
+	border-top: 1px solid $border-dark-grey;
+	color: $color-dark-grey;
+	.answer-hd{line-height: .7rem;margin-bottom: .25rem;}
+	.answer-hd-icon{
+		font-size: $font30;
+		color: $color-white;
+		background: $bg-cyan;
+		width: .7rem;
+		height: .7rem;		
+		border-radius: 50%;
+		margin-right: .1rem;
+	}
+	.answer-color{
+		color: $bg-cyan;
+		padding-left: .1rem;
+	}
+
 }
 </style>

@@ -3,9 +3,9 @@
 		<div class="select-item" 
 		v-for="(item,index) of types"
 		:key="index"
-		:val="item"
+		:val="item.id"
 		@click="handleSelectClick">
-			<span class="type-name">{{item}}</span>
+			<span class="type-name">{{item.name}}</span>
 			<span class="iconfont">&#xe8ef;</span>
 		</div>	
 	</div>
@@ -16,7 +16,12 @@
 		name: 'SelectType',
 		data () {
 			return {				
-				types: ['全部','单选题','多选题','判断题']
+				types: [
+					{id:"0",name:'全部'},
+					{id:"1",name:'单选题'},
+					{id:"2",name:'多选题'},
+					{id:"3",name:'判断题'}
+					]
 			}
 		},		
 		methods: {

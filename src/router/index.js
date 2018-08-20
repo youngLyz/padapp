@@ -29,7 +29,7 @@ Router.prototype.openPage = function (link,order) {
   })
 }
 Vue.use(Router)
-export default new Router({
+let router = new Router({
   //mode: 'history',
  // base: 'padExam/pages',//导出后所在的根目录
   routes: [
@@ -65,7 +65,15 @@ export default new Router({
         }
       ]
     }, 
-         {
+      {
+        path: '/admin',
+        component: r =>require.ensure([],() =>r(require('../pages/Admin')),'Admin')
+      },
+      {
+        path:'/readBook/:bookId',
+        component: r =>require.ensure([],() =>r(require('../pages/reader/ReadBook')),'ReadBook')
+      },
+        {
           path:'/examStart',
           component: r =>require.ensure([],() =>r(require('../pages/exam/ExamStart')),'ExamStart')
         },
@@ -151,3 +159,40 @@ export default new Router({
     return { x: 0, y: 0 }
   }
 })
+
+router.beforeEach((to,from,next)=>{
+  //console.log("localStorage:"+window.localStorage);
+  let accessToken = window.localStorage.getItem("accessToken");  
+
+  if(!accessToken){//不存在用户
+
+    if(to.path=='/login'){
+      next();
+    }else{
+      next('/login')    
+    }
+  }else{
+    if(to.path=='/admin'){
+      next();
+    }else{
+      JSI.verifyUser(JSON.parse(accessToken),(res)=>{
+        console.log("verifyUser:"+JSON.stringify(res));
+        if(res.id){
+          if(res.type==1){//用户
+            next();
+          }else{//管理员
+            next('/admin'); 
+          }
+        }else{
+            console.error('invalid accessToken:'+accessToken);
+            window.localStorage.removeItem("accessToken")
+            next('/login');
+          }
+         
+      });
+    }
+    
+  }
+});
+
+export default router;

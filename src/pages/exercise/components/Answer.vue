@@ -2,17 +2,20 @@
 	<div>
 		<simple-header :title="itemTheme"></simple-header>
 		<div class="page-body">
-			<h4 class="item-type">
-				单项选择题
-			</h4>
-			<div class="item-answs">
-				<span class="as-item" 
-					v-for="(item,index) of answerids['1']"
-					:key="index"
-					:class="{'selected':item.answer_id.length>0}"
-					@click="clickAnswer(item.num,item.answer_id)"
-				>{{item.num}}</span>
-			</div>
+			<template v-if="answerids['1'].length>0">
+				<h4 class="item-type">
+					单项选择题
+				</h4>
+				<div class="item-answs">
+					<span class="as-item" 
+						v-for="(item,index) of answerids['1']"
+						:key="index"
+						:class="{'selected':item.answer_id.length>0}"
+						@click="clickAnswer(item.num,item.answer_id)"
+					>{{item.num}}</span>
+				</div>
+			</template>
+			<template v-if="answerids['2'].length>0">
 			<h4 class="item-type">
 				多项选择题
 			</h4>
@@ -25,6 +28,8 @@
 					@click="clickAnswer(item.num,item.answer_id)"
 				>{{item.num}}</span>
 			</div>
+			</template>
+			<template v-if="answerids['3'].length>0">
 			<h4 class="item-type">
 				判断题
 			</h4>
@@ -36,12 +41,12 @@
 					@click="clickAnswer(item.num,item.answer_id)"
 				>{{item.num}}</span>
 			</div>
+		</template>
 			<div class="remark">
 				<p>注：蓝色背景代表改题目已答，白色背景代表尚未作答</p>
 			</div>
-		</div>
-		<slot></slot>
-		
+			<slot></slot>
+		</div>				
 	</div>	
 </template>
 <script type="text/javascript">
@@ -70,27 +75,30 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.3rem;
+	padding: .5rem 0;
+	max-height: 12rem;
+	overflow: auto;
 	@include padlf40;
 	.item-type{
 		color: $blue;
-		font-size: $font20;
+		font-size: $font18;
 		font-weight: bold;
 		height: .45rem;
 		line-height: .45rem;
 		border-left: .1rem solid $blue;
 		padding-left: .25rem;
-		margin: .3rem 0;
+		margin: .15rem 0;
 	}
 	.item-answs{
-		margin: .5rem .35rem;
+		margin: .3rem .35rem;
 		.as-item{
 			width:.7rem;
 			height: .7rem;
-			margin-right:.5rem;
-			margin-bottom:.5rem;
+			line-height: .7rem;
+			margin-right:.25rem;
+			margin-bottom:.25rem;
 			color: $color-grey;
-			font-size: $font24;
+			font-size: $font16;
 			border:1px solid $color-grey;
 			border-radius: 50%;
 			display: inline-block;

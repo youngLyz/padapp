@@ -16,8 +16,8 @@
 			<div class="test-btn">
 				<button type="button" 
 					@click="handleClickStart"
-					class="test-start-btn"					
-					:class="{'disabled':!examState}">进入考试</button>
+					class="test-start-btn"
+					:class="{'disabled':!examState}">{{buttonText}}</button>
 			</div>
 			
 		</div>		
@@ -35,13 +35,12 @@
 			}
 		},
 		computed: {
-			...mapState(['examClock','examMinutes','examDate','examState'])
-		},
-		watch: {
-			examState (val,oldVal){
-				console.log("examWatch:"+val)
-				if(val){
-					this.$store.commit('REMBER_TIME');//开始计时
+			...mapState(['examClock','examMinutes','examDate','examState','pt_info']),
+			buttonText() {
+				if(this.pt_info.submit_date!=null){
+					return "您已提交试卷"
+				}else{
+					return "进入考试"
 				}
 			}
 		},		
@@ -50,7 +49,7 @@
 		},		
 		methods: {
 			handleClickStart () {
-				console.log(this.examState);
+				//console.log(this.examState);
 				if(this.examClock===this.standClock&&this.examState){					
 					this.$router.push('/examStart');
 				}
@@ -105,7 +104,7 @@
 		}
 	}
 	.test-btn{
-		margin:2rem 5% 0;
+		margin:1rem 5% 0;
 		.test-start-btn{
 			width:100%;
 			height: 1rem;

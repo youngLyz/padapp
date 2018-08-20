@@ -9,8 +9,7 @@
 				:key="index" 
 				:firstClass="item.firstClass"
 				:secondClass="item.secondClass"></engineer>
-		</div>
-		
+		</div>		
 	</div>
 	
 </template>
@@ -29,14 +28,14 @@
 					{id:2,img:require('../assets/images/swiper2.jpg')}
 					],
 				engiList:[
-					{firstClass:'资料员',secondClass:['专业管理实务','基础知识']},
+					/*{firstClass:'资料员',secondClass:['专业管理实务','基础知识']},
 					{firstClass:'施工员',secondClass:['土建','设备安装','市政','装饰']},
 					{firstClass:'材料员',secondClass:['专业基础知识','专业管理实务']},
 					{firstClass:'标准员',secondClass:['专业基础知识','专业管理实务']},
 					{firstClass:'质量员',secondClass:['土建','市政','设备安装','装饰']},
 					{firstClass:'安全员',secondClass:['专业基础知识','专业管理实务']},
 					{firstClass:'机械员',secondClass:['专业基础知识','专业管理实务']},
-					{firstClass:'劳务员',secondClass:['专业基础知识','专业管理实务']}
+					{firstClass:'劳务员',secondClass:['专业基础知识','专业管理实务']}*/
 					]
 					
 			}
@@ -46,8 +45,63 @@
 			HomeSwiper,
 			Engineer
 		},
+		methods: {
+			getTestPaper(){
+			//	console.log("getExamTemplate before JSI:"+JSON.stringify(window.JSI.getText()))
+				JSI.getExamTemplate((res)=>{
+					//res.answer_time = 120;
+					res.type_num = "单选题（"+res.pt_single_num+"）多选题（"+res.pt_multi_num+"）判断题（"+res.pt_tf_num+"）";
+					res.total_score = res.pt_single_num*res.pt_single_score
+					+res.pt_multi_num*res.pt_multi_score+res.pt_tf_num*res.pt_tf_score;
+					this.$store.commit('initExamData',res);
+					this.$store.commit('clockDown');//启动考试倒计时
+				});
+			}
+		},
 		created () {
-			this.$store.commit('clockDown');//启动考试倒计时
+			//从本地读取用户			
+			let userInfo = this.$store.state.userInfo
+			if(!userInfo){
+				let accessToken = window.localStorage.getItem("accessToken");
+				this.$store.dispatch("setLocalUser",JSON.parse(accessToken));
+			}
+			//获取所有一级分类和二级分类
+			if(this.$store.state.postClz.length>0){
+				this.engiList = this.$store.state.postClz;
+			}else{
+				JSI.getPostKnowList((params)=>{
+					console.log("getPostKnowList:"+JSON.stringify(params));
+					this.engiList = params;
+					this.$store.commit('setPostClz',params);//将所有分类放到缓存中
+					/*if(this.$store.state.pt_info.submit_date==null){
+						this.getTestPaper();
+					}*/
+				})	
+				if(this.$store.state.pt_info.submit_date==null){
+					this.getTestPaper();
+				}
+			}
+
+			//获取考试信息【考试时间、答题时间等】，设置到state中
+			//if(this.$store.state.pt_info.submit_date==null){//尚未考试
+				/*let pt_info = {
+						pt_name:"2018年资料员专业考试试题",				
+						pt_single_num:30,
+						pt_single_score:1,
+						pt_multi_num:20,
+						pt_multi_score:2,
+						pt_tf_num:20,
+						pt_tf_score:1.5,				
+						answer_time:"120",
+						type_num:"单选题（30）多选题（20）判断题（20）",
+						total_score:100,
+						intro:"2018年资料员专业基础知识试题一，本试卷是为考资料员考试的考生准备的专业基础知识试题及答案练习。",
+						exam_date:'2018-07-19 15:05:00',
+						submit_date:null
+					}*/
+				
+				
+			//}
 		}
 	}
 </script>

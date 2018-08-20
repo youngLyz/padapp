@@ -2,17 +2,18 @@
 	<div>
 		<page-header :title="title"></page-header>
 		<div class="page-body">
-			<ul class="list">
+			<p class="no-item-tip" v-if="list.length==0">您还没有错题记录~</p>
+			<ul v-else class="list">
 				<router-link
 					tag="li"					
 					class="list-item"
 					v-for="(item,index) of list"
 					:key="item.id"
-					:to="'/myWrongDetail/'+item.topic_id"
-					@click="handleHisClick(item.topic_id)">
+					:to="'/myWrongDetail/'+item.id"
+					>
 					<div class="list-item-hd">
 						<span class="list-item-title">
-							{{item.topic_name}}
+							{{item.q_name}}
 						</span>
 						<p class="list-item-info">
 							{{item.date}}							
@@ -42,7 +43,7 @@
 
 		},
 		created () {
-			this.$axios.get('/myWrong.json').then(res=>{					
+			/*this.$axios.get('/myWrong.json').then(res=>{					
 					res = res.data;
 					if(res.status==='ok'){						
 						this.list = res.data.itemDetail;
@@ -50,7 +51,14 @@
 				}).catch(err=>{
 					console.log('axios error:'+err)
 				});
-				
+				*/
+			JSI.getAllWrongQuestions(this.$store.state.userInfo.id,(res)=>{
+				this.list = res;
+				let info = {					
+					itemDetail: res
+				};
+				this.$store.dispatch('initializeData',info);
+			})	
 		}
 
 	}
@@ -59,6 +67,12 @@
 <style lang="scss" scoped>
 .page-body{
 	margin-top: 1.3rem;
+	.no-item-tip{
+		font-size: $font18;
+		color: $color-dark-grey;
+		line-height: 2rem;
+		text-align: center;
+	}
 	.list{
 		@include padlf40;
 		padding-top: .7rem;

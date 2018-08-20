@@ -15,6 +15,7 @@
 					答题情况
 				</div>
 				<div class="answer-list">
+					<template v-if="answerid['1'].length>0">
 					<h4 class="item-type">
 						单项选择题
 					</h4>
@@ -22,9 +23,11 @@
 						<span class="as-item" 
 							v-for="(item,index) of answerid['1']"
 							:key="index"
-							:class="{'selected':item.answer_id.length>0,'error':item.res==0,'warn':item.res==1}"	
+							:class="{'selected':item.answer_id.length>0,'error':item.res==0}"	
 						>{{item.num}}</span>
 					</div>
+					</template>
+					<template v-if="answerid['2'].length>0">
 					<h4 class="item-type">
 						多项选择题
 					</h4>
@@ -33,9 +36,11 @@
 							class="as-item" 
 							v-for="(item,index) of answerid['2']"
 							:key="index"
-							:class="{'selected':item.answer_id.length>0,'error':item.res==0,'warn':item.res==1}"	
+							:class="{'selected':item.answer_id.length>0,'error':item.res==0}"	
 						>{{item.num}}</span>
 					</div>
+				</template>
+				<template v-if="answerid['3'].length>0">
 					<h4 class="item-type">
 						判断题
 					</h4>
@@ -43,10 +48,10 @@
 						<span class="as-item" 
 							v-for="(item,index) of answerid['3']"
 							:key="index"
-							:class="{'selected':item.answer_id.length>0,'error':item.res==0,'warn':item.res==1}"	
+							:class="{'selected':item.answer_id.length>0,'error':item.res==0}"	
 						>{{item.num}}</span>
 					</div>
-					
+					</template>
 				</div>
 			</div>
 		</div>
@@ -75,13 +80,14 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.2rem;
+	margin-top: .5rem;
 	background: $bg-light-grey;
 	.score-box{
 		background: $blue;
 		color: $color-white;
 		justify-content: center;	
-		padding: .5rem 0;
+		padding-top: 1rem;
+		padding-bottom: .5rem;
 		.score-circle{
 			width:3.5rem;
 			height: 3.5rem;
@@ -108,7 +114,7 @@
 
 	.score-info{
 		@include padlf40;
-		margin-top: .45rem;
+		/*margin-top: .45rem;*/
 		background: $color-white;
 		.score-info-hd{
 			@include border-bottom($border-dark-grey);
@@ -123,24 +129,24 @@
 	}
 	.item-type{
 		color: $blue;
-		font-size: $font20;
+		font-size: $font18;
 		font-weight: bold;
 		height: .45rem;
 		line-height: .45rem;
 		border-left: .1rem solid $blue;
 		padding-left: .25rem;
-		margin: .3rem 0;
+		margin: .15rem 0;
 	}
 	.item-answs{
-		margin: .5rem .35rem;
+		margin: .3rem .35rem;
 		.as-item{
 			width:.7rem;
 			height: .7rem;
 			line-height: .7rem;
-			margin-right:.5rem;
+			margin-right:.25rem;
 			margin-bottom:.25rem;
 			color: $color-grey;
-			font-size: $font18;
+			font-size: $font16;
 			border:1px solid $color-grey;
 			border-radius: 50%;
 			display: inline-block;

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<page-header :title="title"></page-header>
+		<page-header :title="pt_info.pt_name"></page-header>
 		<div class="page-body">
 			<h2 class="test-title">{{pt_info.pt_name}}</h2>
 			<ul class="test-list">
@@ -8,7 +8,7 @@
 					卷面总分：{{pt_info.total_score}}分
 				</li>
 				<li class="test-list-item">
-					试卷类型：模拟试题
+					试卷类型：考试试卷
 				</li>
 				<li class="test-list-item">
 					题型及量：{{pt_info.type_num}}
@@ -26,7 +26,7 @@
 			</div>
 			<div class="test-intro">
 				<h4 class="test-intro-hd">试卷简介</h4>
-				<p>{{pt_info.intro}}</p>
+				<p>{{pt_info.pt_memo}}</p>
 			</div>
 		</div>
 		
@@ -35,14 +35,17 @@
 
 <script type="text/javascript">
 	import PageHeader from 'comp/Header'	
+	import { mapState } from 'vuex'
 	export default {
 		name: 'ExamStart',		
 		data () {
 			return {
-				title: '2018年资料员专业基础',
-				hideBtn:false,
-				pt_info:null			
+				//title: '2018年资料员专业基础',
+				hideBtn:false				
 			}
+		},
+		computed: {
+			...mapState(['pt_info'])
 		},
 		components: {
 			PageHeader
@@ -50,7 +53,7 @@
 		methods: {
 			handleStartClick () {
 				
-				let itemList = [{	
+				/*let itemList = [{
 						id:1,
 						q_name:'单选试题名称',
 						q_type:'1',//类型：单选-1、多选-2、判断-3		
@@ -69,8 +72,9 @@
 						q_result:[1],//1,2,3,4对应ABCD
 						q_option:['选项A','选项B']
 					}]
-
+*/
 				let info = {
+					itemId:this.pt_info.id,
 					itemTheme:this.pt_info.pt_name,
 					totalScore:this.pt_info.total_score,
 					scorePrinciple:{
@@ -78,19 +82,24 @@
 						multi_score:this.pt_info.pt_multi_score,
 						tf_score:this.pt_info.pt_tf_score
 					},
-					itemDetail: itemList
+					itemDetail: null
 				};
+				console.log("getExamTemplateQuestions:"+JSON.stringify(info.scorePrinciple))
+				JSI.getExamTemplateQuestions((res)=>{
+					info.itemDetail = res;							
+					this.$store.dispatch('initializeData',info);
+					this.$store.commit('REMBER_TIME');//开始计时
+					this.$router.push('/testItem/examStart');		
+				});	
 
-				this.$store.dispatch('initializeData',info);
-				this.$store.commit('REMBER_TIME');//开始计时
-				this.$router.push('/testItem/examStart');			
+					
 				
 			}
 		},
 		created () {
 			console.log(this.pt_id)
 			//获取试卷信息
-			this.pt_info = {
+			/*this.pt_info = {
 				pt_name:"2018年资料员专业基础知识试题一",				
 				pt_single_num:30,
 				pt_single_score:1,
@@ -102,7 +111,7 @@
 				type_num:"单选题（30）多选题（20）判断题（20）",
 				total_score:100,
 				intro:"2018年资料员专业基础知识试题一，本试卷是为考资料员考试的考生准备的专业基础知识试题及答案练习。"
-			}
+			}*/
 		}
 	}
 </script>

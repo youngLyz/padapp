@@ -106,9 +106,9 @@
 	margin-top: 1.3rem;
 	@include padlf40;
 	.test-title{
-		font-size: $font20;
+		font-size: $font18;
 		color: $color-dark;
-		line-height: 1.2rem;
+		line-height: 1rem;
 		@include border-bottom($border-dark-grey);
 		.test-type{
 			color: $blue;
@@ -127,7 +127,7 @@
 				height: .7rem;
 				margin-right:.5rem;
 				color: $color-grey;
-				font-size: $font24;
+				font-size: $font18;
 				border:1px solid $color-grey;
 				border-radius: 50%;
 
@@ -145,7 +145,7 @@
 	.test-tip{
 		color: $blue;
 		font-size: $font16;
-		padding: .3rem 0;
+		padding: .15rem 0;
 	}	
 }	
 .answer-descrip{

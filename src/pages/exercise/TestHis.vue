@@ -3,7 +3,8 @@
 	<div>
 		<page-header :title="title"></page-header>
 		<div class="page-body">
-			<ul class="list">
+			<p class="no-item-tip" v-if="list.length==0">您尚未提交模拟试卷，当前没有测试记录</p>
+			<ul v-else class="list">
 				<li					
 					class="list-item"
 					v-for="(item,index) of list"
@@ -35,28 +36,7 @@
 		data () {
 			return {
 				title: '测试记录',
-				list:[
-					{	id:1,
-						pt_name:'2018年资料员专业基础知识试题一2018年资料员专业基础知识试题一',
-						date:'2018-07-11 10:10:32',
-						score:50},
-					{id:2,
-						pt_name:'2018年资料员专业基础知识试题二',
-						date:'2018-07-11 10:10:32',
-						score:50},
-					{id:3,
-						pt_name:'2018年资料员专业基础知识试题三',
-						date:'2018-07-11 10:10:32',
-						score:50},
-					{id:4,
-						pt_name:'2018年资料员专业基础知识试题四',
-						date:'2018-07-11 10:10:32',
-						score:50},
-					{id:5,
-						pt_name:'2018年资料员专业基础知识试题五',
-						date:'2018-07-11 10:10:32',
-						score:50}
-				]
+				list:[]
 			}
 		},
 		components: {
@@ -65,7 +45,7 @@
 		methods: {
 			handleHisClick (paperId,paperName) {				
 				//获取试卷标题和试题列表
-				let itemList = [{	
+				/*let itemList = [{	
 						id:1,
 						q_name:'单选试题名称',
 						q_type:'1',//类型：单选-1、多选-2、判断-3		
@@ -86,16 +66,23 @@
 						q_result:[1],//1,2,3,4对应ABCD
 						answer_ids:[1],
 						q_option:['选项A','选项B']
-					}];
-
+					}];*/
 				let info = {
+					itemId:paperId,
 					itemTheme:paperName,
-					itemDetail: itemList
+					itemDetail: null
 				};
-				this.$store.dispatch('initializeData',info);
-				this.$router.push('/testHisItem');
-				
+				JSI.checkHisItemDetail(this.$store.state.userInfo.id,paperId,(res)=>{
+					info.itemDetail = res;
+					this.$store.dispatch('initializeData',info);						
+					this.$router.push('/testHisItem');
+				});					
 			}
+		},
+		created() {
+			JSI.checkHisItemList(this.$store.state.userInfo.id,(res)=>{
+				this.list = res;
+			});
 		}
 	}
 </script>
@@ -103,6 +90,12 @@
 <style lang="scss" scoped>
 .page-body{
 	margin-top: 1.3rem;
+	.no-item-tip{
+		font-size: $font18;
+		color: $color-dark-grey;
+		line-height: 2rem;
+		text-align: center;
+	}
 	.list{
 		@include padlf40;
 		padding-top: .7rem;

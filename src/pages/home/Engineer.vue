@@ -2,7 +2,7 @@
 	<div class="wrap">
 		<h2 class="title">
 			<span class="iconfont">&#xe650;</span>
-			{{firstClass}}	
+			{{firstClass.qp_name}}	
 		</h2>
 		<div class="list">
 			<a href="javascript:void(0)" 
@@ -11,7 +11,7 @@
 				v-for="(item,index) of secondClass"
 				:key="index"
 			>
-				{{item}}
+				{{item.qk_name}}
 			</a>
 		</div>
 	</div>
@@ -30,6 +30,9 @@
 		methods: {
 			...mapActions(['setCurrentClaz']),
 			handleEngiClick (firstClz,secondClz) {
+				JSI.initQuestionBank({"post":firstClz.id,"know":secondClz.id},function(params){
+		        	console.log("updatePostClass");
+		      	});
 				this.setCurrentClaz({firstClz,secondClz});
 				this.$router.push('/exer');
 			}
@@ -43,7 +46,7 @@
 	@include padlf40;	
 	@include border-bottom;
 	.title{
-		font-size: $font24;
+		font-size: $font20;
 		color: $color-dark-grey;
 		margin-top: .25rem;
 		.iconfont{

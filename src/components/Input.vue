@@ -1,8 +1,12 @@
 <template>
 	<div class="form-group">
 		<label class="form-label">{{obj.labelName}}</label>
-		<input :type="obj.inputType" class="form-input" :name="obj.inputName">
-		<span v-if="!obj.validCode" class="form-clear-btn iconfont">&#xe641;</span>
+		<input :type="obj.inputType" 
+			:value="value" 
+			@input="emitVal" 
+			class="form-input" 
+			:name="obj.inputName">
+		<span v-if="!obj.validCode" @click="clearInputHandler" class="form-clear-btn iconfont">&#xe641;</span>
 		<span v-else class="form-valid-code">获取验证码</span>
 	</div>
 </template>
@@ -10,12 +14,18 @@
 <script type="text/javascript">
 	export default {
 		name: 'FormInput',
-		props:{
-			obj: Object
-		},
-		data () {
+		props:['obj','value'],
+		/*data () {
 			return {
-
+				inputData:''
+			}
+		},*/
+		methods: {
+			emitVal (e){
+				this.$emit('input',e.target.value)
+			},
+			clearInputHandler () {
+				this.$emit('input',"");
 			}
 		}
 	}

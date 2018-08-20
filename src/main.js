@@ -7,11 +7,19 @@ import './assets/css/reset.css'
 import './assets/css/iconfont/iconfont.css'
 import animate from 'animate.css'
 import tools from 'js/tools.js'
-Vue.config.productionTip = false
+//import './assets/js/JSI.js'
+import './assets/js/LocalJSI.js'
+import './assets/js/message.js'
 
+Vue.config.productionTip = false
 /* eslint-disable no-new */
-Vue.use(axios)
+Vue.use(axios)	
 Vue.use(tools)
+
+const VueTouch = require('vue-touch');
+Vue.use(VueTouch, { name: 'v-touch' });
+
+
 new Vue({
   el: '#app',
   router,

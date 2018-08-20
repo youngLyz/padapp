@@ -6,12 +6,12 @@
 				<li class="point-item">
 					昵称					
 					<span class="iconfont right">&#xe8f0;</span>
-					<span class="point-info">15824741236</span>
+					<span class="point-info">{{$store.state.userInfo.phone_name}}</span>
 				</li>
-				<router-link tag="li" to="/userPswd" class="point-item">
+				<!-- <router-link tag="li" to="/userPswd" class="point-item">
 					修改密码					
 					<span class="iconfont right">&#xe8f0;</span>
-				</router-link>
+				</router-link> -->
 			</ul>
 			<div class="btn-box">
 				<full-button name="退出登录" @skipNext="handleLogout"></full-button>
@@ -35,6 +35,7 @@
 		},
 		methods: {
 			handleLogout () {
+				this.$store.dispatch("removeLocalUser");
 				this.$router.push('/login');
 			}
 		}

@@ -26,7 +26,7 @@
 			</div>
 			<div class="test-intro">
 				<h4 class="test-intro-hd">试卷简介</h4>
-				<p>{{pt_info.intro}}</p>
+				<p>{{pt_info.pt_memo}}</p>
 			</div>
 		</div>
 		
@@ -51,7 +51,7 @@
 		methods: {
 			handleStartClick () {
 				//根据获取试卷信息和试题列表
-				let itemList = [{	
+			/*	let itemList = [{	
 						id:1,
 						q_name:'单选试题名称',
 						q_type:'1',//类型：单选-1、多选-2、判断-3		
@@ -69,9 +69,10 @@
 						q_type:'3',//类型：单选-1、多选-2、判断-3		
 						q_result:[1],//1,2,3,4对应ABCD
 						q_option:['选项A','选项B']
-					}]
+					}]*/
 
 				let info = {
+					itemId:this.pt_id,
 					itemTheme:this.pt_info.pt_name,
 					totalScore:this.pt_info.total_score,
 					scorePrinciple:{
@@ -79,30 +80,30 @@
 						multi_score:this.pt_info.pt_multi_score,
 						tf_score:this.pt_info.pt_tf_score
 					},
-					itemDetail: itemList
+					itemDetail: null
 				};
 
-				this.$store.dispatch('initializeData',info);
-				this.$store.commit('REMBER_TIME');//开始计时
-				this.$router.push('/testItem/simulateTest');
+				JSI.getPageTblObjectById(this.pt_id,(res)=>{
+					info.itemDetail = res;
+					
+					this.$store.dispatch('initializeData',info);
+					this.$store.commit('REMBER_TIME');//开始计时
+					this.$router.push('/testItem/simulateTest');
+				});
 			}
 		},
 		created () {
 			console.log(this.pt_id)
 			//获取试卷信息
-			this.pt_info = {
-				pt_name:"2018年资料员专业基础知识试题一",				
-				pt_single_num:30,
-				pt_single_score:1,
-				pt_multi_num:20,
-				pt_multi_score:2,
-				pt_tf_num:20,
-				pt_tf_score:1.5,				
-				answer_time:"120",
-				type_num:"单选题（30）多选题（20）判断题（20）",
-				total_score:100,
-				intro:"2018年资料员专业基础知识试题一，本试卷是为考资料员考试的考生准备的专业基础知识试题及答案练习。"
-			}
+			JSI.getPageTblById(this.pt_id,(res)=>{
+				
+				res.answer_time = 120;
+				res.type_num = "单选题（"+res.pt_single_num+"）多选题（"+res.pt_multi_num+"）判断题（"+res.pt_tf_num+"）";
+				res.total_score = res.pt_single_num*res.pt_single_score
+					+res.pt_multi_num*res.pt_multi_score+res.pt_tf_num*res.pt_tf_score;
+
+				this.pt_info = res;	
+			});
 		}
 	}
 </script>

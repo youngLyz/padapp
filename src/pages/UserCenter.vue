@@ -4,7 +4,7 @@
 		<div class="page-body">
 			<ul class="point-list">
 				<router-link tag="li" to="/userInfo" class="point-item">
-					187****6321		
+					{{$store.state.userInfo.phone_name}}	
 					<span class="iconfont right">&#xe8f0;</span>
 				</router-link>
 				<router-link tag="li" to="/testHis" class="point-item">

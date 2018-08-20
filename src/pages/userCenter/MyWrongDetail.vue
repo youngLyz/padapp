@@ -7,12 +7,12 @@
 			</h2>
 			<ul class="test-list">
 				<li class="test-list-item descrip">
-					{{itemInfo.topic_name}}
+					{{itemInfo.q_name}}
 				</li>
 				<li><h4 class="test-tip">选项</h4></li>
 				<li class="test-list-item" 
-					v-for="(item,index) of itemInfo.topic_answer"
-					:key="item.topic_answer_id"					
+					v-for="(item,index) of itemInfo.q_option"
+					:key="index"					
 				>
 					<button 
 						type="button" 
@@ -20,7 +20,7 @@
 						>
 						{{asList[index]}}						
 					</button>
-					{{item.answer_name}}
+					{{item}}
 				</li>				
 			</ul>
 			<div class="answer-descrip">
@@ -29,7 +29,7 @@
 					答案解析
 				</h4>
 				<div class="answer-info">
-					正确答案<span class="answer-color">{{itemInfo.answer_ids}}</span>
+					正确答案<span class="answer-color">{{itemRes}}</span>
 				</div>
 			</div>
 		</div>		
@@ -52,16 +52,20 @@
 		components: {
 			PageHeader		
 		},
+		computed: {
+			itemRes() {
+				let res = this.itemInfo.q_result;
+				let str =  res.map((item,index)=>{					
+					return this.asList[item-1]
+				});				
+				return str.join(",");
+			}
+		},
 		created () {
-			this.$axios.get("/myWrong.json").then(res=>{
-				res = res.data;
-				if(res.status==='ok'){
-					let list = res.data.itemDetail;
-					this.itemInfo = list.find((item,index)=>item.topic_id==this.item_id);
-				}
-			}).catch(err=>{
-				console.log('ajax error:'+err);
-			})
+			let list = this.$store.state.itemDetail;
+
+			this.itemInfo = list.find((item,index)=>item.id==this.item_id);			
+			console.log("MyWrongDetail:"+JSON.stringify(this.itemInfo));
 		}
 	}
 </script>

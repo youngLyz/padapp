@@ -2,12 +2,13 @@
 	<div>
 		<page-header :title="title" :backUrl="backUrl"></page-header>
 		<div class="page-body">
-			<ul class="point-list">
+			<p class="no-item-tip" v-if="list.length==0">当前分类下没有考点~</p>			
+			<ul v-else class="point-list">
 				<li class="point-item" 
 					v-for="(item,index) of list"
 					:key="index"
-					@click="handlePointClick(item)">
-					{{item}}
+					@click="handlePointClick(item.qpt_id)">
+					{{item.qpt_name}}
 					<span class="iconfont">&#xe8f0;</span>
 				</li>
 			</ul>	
@@ -30,45 +31,46 @@
 			PageHeader
 		},
 		methods: {
-			handlePointClick (item) {
-
-				let itemList = [{	
-						id:1,
-						q_name:'单选试题名称',
-						q_type:'1',//类型：单选-1、多选-2、判断-3		
-						q_result:[1],//1,2,3,4对应ABCD
-						q_option:['选项A','选项B','选项C','选项D']
-					},
-					{	id:2,
-						q_name:'多选试题名称',
-						q_type:'2',//类型：单选-1、多选-2、判断-3		
-						q_result:[1,2],//1,2,3,4对应ABCD
-						q_option:['选项A','选项B','选项C','选项D']
-					},
-					{	id:3,
-						q_name:'判断试题名称',
-						q_type:'3',//类型：单选-1、多选-2、判断-3		
-						q_result:[1],//1,2,3,4对应ABCD
-						q_option:['选项A','选项B']
-					}]
-
+			handlePointClick (itemId) {
 				let info = {
 					itemTheme:this.title,
-					totalScore:itemList.length,
+					totalScore:0,
 					scorePrinciple:{
 						single_score:1,
 						multi_score:1,
 						tf_score:1
 					},
-					itemDetail: itemList
+					itemDetail: null
 				};
-				this.$store.dispatch('initializeData',info);
-				this.$router.push('/testItem/pointTest');			
+				//知识点查询
+				JSI.genPostKnowPointsQuestions(
+					{	
+						"post":this.$store.state.firstClz.id,
+						"know":this.$store.state.secondClz.id,						
+						"point":itemId
+					},(res)=>{
+						if(res.length==0){
+							this.$showMsg('该类别下没有试题')
+						}else{
+							info.itemDetail = res;
+							info.totalScore = res.length;	
+							this.$store.dispatch('initializeData',info);
+							this.$router.push('/testItem/pointTest');					
+						}
+					});			
 
 			}
 		},
 		created () {
-			this.list = ['知识点1','知识点2','知识点3','知识点4','知识点5']
+			//this.list = ['知识点1','知识点2','知识点3','知识点4','知识点5']
+			JSI.genPostKnowPoints(
+				{
+				"post":this.$store.state.firstClz.id,
+				"know":this.$store.state.secondClz.id				
+				},(res)=>{
+				this.list = res;		
+			});
+
 		}
 	}
 </script>
@@ -76,7 +78,12 @@
 <style lang="scss" scoped>
 .page-body{
 	margin-top: 1.3rem;
-
+	.no-item-tip{
+		font-size: $font18;
+		color: $color-dark-grey;
+		line-height: 2rem;
+		text-align: center;
+	}
 	.point-list{
 		border-top: .25rem solid $bg-grey;
 		.point-item{

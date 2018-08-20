@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<dialogs-wrapper wrapper-name="confirm-message" tag="div" transition-name="fade">			
+		</dialogs-wrapper>		
 		<page-header :title="pageTitle"></page-header>
 		<div class="page-body">
 			<h2 class="test-title">
@@ -13,7 +15,7 @@
 				<li><h4 class="test-tip">选项</h4></li>
 				<li class="test-list-item" 
 					v-for="(item,index) of itemDetail[itemNum-1].q_option"
-					:key="item.topic_answer_id"
+					:key="item.id"
 					v-bind:class="{'selected':choosedId.indexOf(index+1)>-1}"
 					@click="choose(index,item.id,itemDetail[itemNum-1].q_type)">
 					<button 
@@ -99,7 +101,8 @@
 				topicId: null,
 				topicType:null,				
 				showAnswer:false,
-				showCheckAnswer:false			
+				showCheckAnswer:false,
+				prevUrl:this.$route.params.prevUrl
 			}
 		},
 		computed: {
@@ -134,12 +137,51 @@
 			examState: function (val,oldVal){//观察考试状态，过了考试时间或者提交试卷则自动跳转
 				if(!val){
 					//提交试题
-					console.log("force submit"+JSON.stringify(this.$store.state.answerid));
-
+					//console.log("force submit"+JSON.stringify(this.$store.state.answerid));
+					let state_ = this.$store.state;						
+			  		let qalist = state_.answerid["1"].concat(state_.answerid["2"],state_.answerid["3"]);
+			  		let userId = state_.userInfo.id;
+			  		let date = this.formatDate(new Date());
 					if(this.$route.params.prevUrl==='examStart'){//考试
-						this.$router.push("/exam");		
+						JSI.saveExamResult(userId,state_.currentItemId,state_.score,date,qalist,(res)=>{
+							console.log("saveExamResult callback:"+res.result);
+							this.$store.commit('submitExamDate');//设置考试时间
+							this.$router.push("/exam");	
+						})
+						
 					}else{
-						this.$router.push('/scoreCard/'+this.$route.params.prevUrl);//模拟考试
+						
+				  		if(this.prevUrl==='simulateTest'){//模拟考试
+							console.log("savePageTblObject start");				  			
+					  		JSI.savePageTblObject(userId,state_.currentItemId,state_.score,date,qalist,
+					  			(res)=>{
+					  				//模拟考试
+					  			console.log("savePageTblObject callback:"+res.result);
+					  			this.$router.push('/scoreCard/'+this.prevUrl);
+					  		});
+				  		}else{//0-快速练习，1-考点练习，2-错题重做
+				  			//console.log("testItemSubmit start");
+				  			let typesArr = ["fastTest","pointTest","wrongTest"];
+				  			let curType = typesArr.indexOf(this.prevUrl);
+				  			if(curType>-1){
+				  				if(curType==2){//错题重做，传正确题目的id
+				  					qalist = qalist.filter((qitem,index)=>{
+				  						return qitem.res==1;
+				  					});
+				  				}
+				  				let itemIds = qalist.map((qitem,index)=>{
+				  					return qitem.id
+				  				}).join("|");				  				
+
+				  				JSI.testItemSubmit(curType,userId,itemIds,(res)=>{
+									console.log("testItemSubmit callback:"+res.result);
+					  				this.$router.push('/scoreCard/'+this.prevUrl);
+				  				});	
+				  			}
+				  			
+				  		} 
+				  		
+						
 					}					
 				}				
 			}
@@ -151,7 +193,7 @@
 			AnswerCard
 		},
 		methods: {
-			...mapActions(['addNum','changeNum','remeberAnsw','computeScore']),
+			...mapActions(['addNum','changeNum','remeberAnsw','computeScore','exitExercise']),
 			choose (index,topic_id,topic_type) {	
 				let ans_id = index+1;			
 				let curIndex = this.choosedId.indexOf(ans_id);	//判断当前答案的id是否被选中
@@ -163,7 +205,7 @@
 					this.choosedId.push(ans_id);
 				}
 
-				if(this.choosedId.length>1&&(topic_type==='1'||topic_type==='3')){
+				if(this.choosedId.length>1&&(topic_type===1||topic_type===3)){
 				//单选和判断，将上次选择的数据删除
 					this.choosedId.shift();
 				}
@@ -195,15 +237,26 @@
 				let notAll = ansArr.some((item,index)=>{
 								return item.answer_id.length==0
 							});
-				console.log("confirmSubmit:"+notAll);
+				//console.log("confirmSubmit:"+notAll);
 				if(notAll){
-					if(!confirm('您还有别的题没有答哦，您确认要提交吗？')){
-						return;
-					}
+					this.$confirmMsg('提示','您还有别的题没有答哦，您确认要提交吗？').then(res=>{
+						if(!res){
+							return;
+						}else{
+							clearInterval(this.timer)	
+							console.log("confirmSubmit clearInterval:"+this.timer);
+					  		this.choosedId = [];
+					  		this.computeScore();	
+						}
+					})
+					
+				}else{
+					clearInterval(this.timer)	
+					console.log("confirmSubmit clearInterval:"+this.timer);
+			  		this.choosedId = [];
+			  		this.computeScore();	
 				}		
-				clearInterval(this.timer)
-		  		this.choosedId = [];
-		  		this.computeScore();
+					  		
 				//this.$router.push('/scoreCard/'+this.$route.params.prevUrl)
 			},
 			handleAnswerClicked (num,answers) {
@@ -221,26 +274,46 @@
 		beforeRouteLeave (to, from, next) {	
 			
 			if(to.path.indexOf('testStart')>-1){//模拟考试
+				console.log("beforeRouteLeave examState="+this.examState);
 				if(!this.examState){//考试状态变化，直接退出考试				
 					//加提示
 					next();
 				}else{//考试中，手动退出提示
-					if(confirm('提示：您尚未提交试卷，退出将无法在记录中查看试卷')){
-						clearInterval(this.timer);
-						next();	
-					}	
+					this.$confirmMsg('提示','您尚未提交试卷，退出将无法在记录中查看试卷').then(res=>{
+						if(res){
+							clearInterval(this.timer);
+							console.log("beforeRouteLeave clearInterval:"+this.timer);
+							this.exitExercise();//更改考试状态
+							next();		
+							
+						}
+					})	
 				}
 				
 			}else if(to.path.indexOf('exam')>-1){//真实考试	
+
 				if(!this.examState){					
 					next()	
 				}else{//手动退出
-					alert("您尚未提交试卷，不能退出");
+					this.$showMsg("您尚未提交试卷，不能退出");
 					//console.log("force submit"+JSON.stringify(this.$store.state.answerid));	
 				}
 				
-			}else{//其他考试，自动退出
-				next();
+			}else{//其他考试，退出提示
+				console.log("beforeRouteLeave examState="+this.examState);
+				if(!this.examState){
+					next();
+				}else{
+					console.log("other tests confirmMsg------")
+					this.$confirmMsg('提示','您尚未提交试卷，退出将无法查看答题结果').then(res=>{
+						if(res){
+							this.exitExercise();//更改考试状态
+							console.log("beforeRouteLeave :"+this.examState);
+							next();							
+						}
+					})	
+				}
+				
 			}	
 		
 			
@@ -253,9 +326,9 @@
 	margin-top: 1.3rem;
 	@include padlf40;
 	.test-title{
-		font-size: $font20;
+		font-size: $font18;
 		color: $color-dark;
-		line-height: 1.2rem;
+		line-height: 1rem;
 		@include border-bottom($border-dark-grey);
 		.test-type{
 			color: $blue;
@@ -274,7 +347,7 @@
 				height: .7rem;
 				margin-right:.5rem;
 				color: $color-grey;
-				font-size: $font24;
+				font-size: $font18;
 				border:1px solid $color-grey;
 				border-radius: 50%;
 
@@ -292,7 +365,7 @@
 	.test-tip{
 		color: $blue;
 		font-size: $font16;
-		padding: .3rem 0;
+		padding: .15rem 0;
 	}	
 }	
 .answer-card{

@@ -2,7 +2,7 @@
   <header>
     <div class="header">    
       <a class="header-arrow" href="javascript:void(0)" @click="headerArrowClick">
-        {{currentTitle}}
+        {{currentTitle.qk_name}}
         <span class="iconfont" ref="headerIcon">&#xe635;</span>
       </a>      
     </div>
@@ -16,7 +16,7 @@
               v-for="(item,index) of titleList"
               :key="index"
               @click="changeTitleClick(item)"
-            >{{item}}</li>         
+            >{{item.qk_name}}</li>         
 
           <router-link to="/home" tag="li" class="list-item">
             切换科目
@@ -37,12 +37,19 @@ export default {
   data () {
     return {
       currentTitle:this.title,
-      isShow: false,
-      titleList:["专业管理实务","基础知识","土建","水利","市政"]
+      isShow: false
+    
     }
   },
   computed: {
-      ...mapState(['firstClz','secondClz'])
+      ...mapState(['firstClz','secondClz','postClz']),
+      titleList () {
+        //debugger
+        let fs = this.postClz.find((item,index)=>{
+          return item.firstClass.id==this.title.fid;
+        });
+        return fs.secondClass||[];
+      }
     },  
   methods: {
     ...mapActions(['setCurrentClaz']),
@@ -58,6 +65,14 @@ export default {
     changeTitleClick (newTitle) {
       this.currentTitle = newTitle;
       this.isShow = false;
+      JSI.initQuestionBank(
+        {
+          "post":this.$store.state.firstClz.id,
+          "know":this.currentTitle.id
+        },
+        function(params){
+          console.log("updatePostClass");
+        });
       this.setCurrentClaz({firstClz:this.$store.state.firstClz,secondClz:this.currentTitle});
       //other action
     }

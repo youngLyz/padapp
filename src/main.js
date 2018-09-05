@@ -12,6 +12,7 @@ import './assets/js/LocalJSI.js'
 import './assets/js/message.js'
 
 Vue.config.productionTip = false
+Vue.config.devtools = true;
 /* eslint-disable no-new */
 Vue.use(axios)	
 Vue.use(tools)

@@ -14,10 +14,15 @@
 				<p>注：过了考试时间范围将无法进入考试，考试期间一旦提交试题答案，将无法修改答案，各位考试谨慎提交！</p>
 			</div>
 			<div class="test-btn">
-				<button type="button" 
+				<full-button 
+					class="test-start-btn"
+					:name="buttonText"
+					:class="{'disabled':!examState}"
+					@skipNext="handleClickStart"></full-button>
+				<!-- <button type="button" 
 					@click="handleClickStart"
 					class="test-start-btn"
-					:class="{'disabled':!examState}">{{buttonText}}</button>
+					:class="{'disabled':!examState}">{{buttonText}}</button> -->
 			</div>
 			
 		</div>		
@@ -25,6 +30,7 @@
 </template>
 <script type="text/javascript">
 	import SimpleHeader from 'comp/SimpleHeader'
+	import FullButton from 'comp/FullButton'
 	import { mapState } from 'vuex'
 	export default {
 		name: 'Exam',
@@ -45,7 +51,8 @@
 			}
 		},		
 		components: {
-			SimpleHeader
+			SimpleHeader,
+			FullButton
 		},		
 		methods: {
 			handleClickStart () {
@@ -60,69 +67,57 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.2rem;
-	background: $bg-light-grey;
-	.score-box{
-		background: $blue;
+	margin-top: 1.12rem;
+	background: $color-white;
+	.score-box{		
 		color: $color-white;
-		justify-content: center;	
-		padding: .5rem 0;
+		padding-top: 0.376rem;	
+		height: 6.0rem;
+		box-sizing: border-box;
+		background: url(./../assets/images/grid@2.jpg) repeat;
+		text-align: center;
 		.score-circle{
-			width:3.5rem;
-			height: 3.5rem;
-			border:.1rem solid rgba(255,255,255,.25);
-			border-radius: 50%;
-			margin:0 auto;
+			width:3.424rem;
+			height: 3.424rem;
+			background-color: $blue;
+			border:0.08rem solid #ffffff8a;						
+			border-radius: 50%;			
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			text-align: center;
+			margin: 0.36rem auto;
 		}
 		.score-cur{
-			font-size: $font36;
+			font-size: $font30;
+			line-height: 0.8rem;
+			padding-top: 0.32rem;
 		}
 		.score-total{
-			font-size: $font24;
+			padding-top: 0.48rem;
+			font-size: $font20;
 		}
 	}
 	.score-date{
+		color: $blue;
 		font-size: $font18;
 		text-align: center;
-		margin-top: .5rem;
+		line-height: 0.6rem;
+		font-weight: 600;
 	}
-
-	.score-info{
-		@include padlf40;
-		margin-top: .45rem;
-		background: $color-white;
-		.score-info-hd{
-			@include border-bottom($border-dark-grey);
-			color: $blue;
-			font-size: $font20;
-			font-weight: bold;
-			line-height: 1.25rem;
-		}
-	}
+	
 	.test-btn{
-		margin:1rem 5% 0;
+		margin-top: 1.0rem;
+		text-align: center;
 		.test-start-btn{
-			width:100%;
-			height: 1rem;
-			line-height: 1rem;
-			display: block;
-			color: $color-white;
-			font-size: $font18;
-			background: $bg-cyan;
-			border-radius: .25rem;
-			text-align: center;
 			&.disabled{
 				background: $color-grey;				
 			}			
 		}
 	}
 	.remark{
-		margin-left: 5%;
-		margin-top: .5rem;  
+		margin-left: 1.0rem;
+		margin-top: 0.36rem;  
 		font-size: $font16;
 		color: $color-grey;
 	}

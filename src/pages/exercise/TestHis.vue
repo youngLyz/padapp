@@ -22,7 +22,7 @@
 							</span>
 						</p>						
 					</div>
-					<span class="iconfont list-item-check">&#xe656;</span>					
+					<span class="iconfont list-item-check">&#xe613;</span>					
 				</li>	
 			</ul>	
 		</div>
@@ -89,7 +89,7 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.3rem;
+	margin-top: 1.12rem;
 	.no-item-tip{
 		font-size: $font18;
 		color: $color-dark-grey;
@@ -97,13 +97,15 @@
 		text-align: center;
 	}
 	.list{
-		@include padlf40;
-		padding-top: .7rem;
+		margin: 0 0.76rem;
 	}
 	.list-item{
 		display: flex;
-		padding:.3rem 0;		
-		@include border-bottom($border-dark-grey);
+		padding-top: 0.44rem;
+		padding-bottom: 0.32rem;	
+		padding-left: 0.2rem;
+		padding-right: 0.512rem;	
+		@include border-bottom;
 		.list-item-hd{
 			flex: 1;
 			padding-right: .15rem; 
@@ -111,15 +113,16 @@
 		.list-item-title{			
 			color: $color-dark-grey;
 			font-size: $font18;
+			line-height: 0.56rem;
 		}
 		.list-item-check{
 			font-size: $font30;
-			color: $color-grey;
+			color: $border-ccc;
 		}
 		.list-item-info{
-			padding-top: .2rem; 
-			color: $color-grey;
+			color: $border-ccc;
 			font-size: $font16;
+			line-height: 0.56rem;
 		}
 		.list-item-score{
 			color: $color-orange;

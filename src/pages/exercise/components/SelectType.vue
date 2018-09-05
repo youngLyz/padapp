@@ -6,7 +6,7 @@
 		:val="item.id"
 		@click="handleSelectClick">
 			<span class="type-name">{{item.name}}</span>
-			<span class="iconfont">&#xe8ef;</span>
+			<span class="iconfont">&#xe628;</span>
 		</div>	
 	</div>
 </template>
@@ -42,18 +42,21 @@
 <style lang="scss" scoped>
 	
 	.select-item{
-		height: 1.4rem;
-		line-height: 1.4rem;
-		font-size: $font24;
-		color: $color-dark;
-		@include border-top($border-dark-grey);
-
+		height: 1.2rem;
+		line-height: 1.2rem;
+		font-size: $font20;
+		color: $color-grey;
+		@include border-top;
+		padding:0 0.24rem; 
 		&.selected{
 			color: $color-blue;
 		}
 		.iconfont{
-			font-size: $font30;
+			font-size: $font24;
 			float: right;
+		}
+		&:last-child{
+			@include border-bottom;
 		}
 	}
 </style>

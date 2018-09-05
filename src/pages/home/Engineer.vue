@@ -1,7 +1,7 @@
 <template>
 	<div class="wrap">
 		<h2 class="title">
-			<span class="iconfont">&#xe650;</span>
+			<span class="iconfont">&#xe601;</span>
 			{{firstClass.qp_name}}	
 		</h2>
 		<div class="list">
@@ -42,35 +42,38 @@
 
 <style lang="scss" scoped>
 .wrap{
-	min-height: 2.5rem;
-	@include padlf40;	
+	min-height: 2rem;	
+	box-sizing: border-box;
 	@include border-bottom;
 	.title{
-		font-size: $font20;
-		color: $color-dark-grey;
-		margin-top: .25rem;
+		font-size: $font18;
+		font-weight: 600;
+		color: $blue;
+		margin-top: 0.224rem;
+		margin-left: 0.256rem;
+		line-height:0.688rem;	
 		.iconfont{
-			font-size: $font30;
-			color: $color-white;
-			width:.75rem;
-			height: .75rem;
-			padding: .15rem;
-			border-radius: 50%;
-			background: $blue;
-			margin-right: .3rem;
+			font-size: $font36;
+			font-weight: normal;
+			color: $blue;
+			width:0.688rem;
+			height:0.688rem;		
+			margin-right: .112rem;	
+			vertical-align: middle;		
 		}
 	}
 	.list{
-		margin-top: .25rem;
-		margin-bottom: .15rem;
+		margin-top: 0.1rem;
+		margin-left: 0.96rem;
 		.list-link{
-			font-size: $font18;
-			color: $color-grey;
-			padding: 0rem .36rem;
-			border-radius: .36rem;
+			font-size: $font16;
+			color: $blue;
+			height: 0.624rem;
+			line-height: 0.624rem;
+			padding: 0 0.256rem;
 			border:1px solid $blue;
-			margin-right: .45rem;
-			margin-bottom: .15rem;
+			margin-right: 0.552rem;
+			margin-bottom: 0.28rem;
 			display: inline-block;
 			white-space: nowrap;
 		}

@@ -118,47 +118,54 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 2rem;
-	@include padlf40;
+	margin-top: 1.36rem;
 	.test-title{
-		font-size: $font24;
-		color: $color-dark;
+		font-size: $font20;
+		color: $blue;
 		line-height: 1.2rem;
-		@include border-bottom($border-dark-grey);
+		margin: 0 0.8rem;
+		padding:0 1.16rem;
+		@include border-bottom;
 	}
 	.test-list{
-		margin-top: .3rem;
+		margin: 0.24rem 0.8rem;
+		padding:0 1.16rem;
 		overflow: hidden;
 		.test-list-item{
 			font-size: $font18;
-			color: $color-grey;
-			line-height: .9rem;
-			width: 50%;
+			color: $color-dark;
+			line-height: 0.72rem;
+			width: auto;
 			float: left;
+
+			&:nth-child(odd){
+				width: 10.12rem;
+			}
 		}
 	}
 	.test-btn{
-		margin:.5rem 0;
+		margin:0.896rem 0;
+		text-align:center;
 		.test-start-btn{
-			width:100%;
-			height: 1rem;
-			line-height: 1rem;
-			display: block;
+			width: 2.696rem;
+			height: 0.7655rem;
+			line-height: 0.7655rem;		
+			font-size: $font20;
 			color: $color-white;
-			font-size: $font18;
-			background: $bg-cyan;
-			border-radius: .25rem;
-			text-align: center;
+			@include background($green);	
 		}
 	}
 	
 	.test-intro{
 		font-size: $font18;
-		color: $color-grey;
-		line-height: 1.5;
+		color: $color-grey;		
+		margin: 0 0.8rem;
+		padding:0.592rem 1.16rem 0;
+		@include border-top;
 		.test-intro-hd{		
 			color: $color-dark;
-			padding-bottom: .5rem;
+			font-size: $font20;
+			line-height: 0.72rem;
 		}
 	}
 }	

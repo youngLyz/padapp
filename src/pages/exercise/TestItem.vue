@@ -5,42 +5,47 @@
 		<page-header :title="pageTitle"></page-header>
 		<div class="page-body">
 			<h2 class="test-title">
-				<span class="test-type">{{itemNum}}[{{itemType}}]</span>
+				<span class="test-type">{{itemNum}}.</span>[{{itemType}}]&nbsp;
 				{{itemTheme}}
 			</h2>
-			<ul class="test-list">
-				<li class="test-list-item descrip">
-					{{itemDetail[itemNum-1].q_name}}
-				</li>
-				<li><h4 class="test-tip">选项</h4></li>
-				<li class="test-list-item" 
-					v-for="(item,index) of itemDetail[itemNum-1].q_option"
-					:key="item.id"
-					v-bind:class="{'selected':choosedId.indexOf(index+1)>-1}"
-					@click="choose(index,item.id,itemDetail[itemNum-1].q_type)">
-					<button 
-						type="button" 
-						class="test-option-btn"
-						>
-						{{asList[index]}}						
-					</button>
-					{{item}}
-				</li>				
-			</ul>
-
-			
+			<div class="test-content">
+				
+				<ul class="test-list">
+					<li class="test-list-item descrip">
+						{{itemDetail[itemNum-1].q_name}}
+					</li>
+					<!-- <li><h4 class="test-tip">选项</h4></li> -->
+					<li class="test-list-item" 
+						v-for="(item,index) of itemDetail[itemNum-1].q_option"
+						:key="item.id"
+						v-bind:class="{'selected':choosedId.indexOf(index+1)>-1}"
+						@click="choose(index,item.id,itemDetail[itemNum-1].q_type)">
+						<button 
+							type="button" 
+							class="test-option-btn"
+							>
+							{{asList[index]}}						
+						</button>
+						{{item}}
+					</li>				
+				</ul>
+				<div class="test-pics">
+					<img src="./../../assets/images/test-pic.jpg">
+				</div>
+			</div>
+						
 			<div class="answer-descrip" v-show="ifCheckAnwer">
 				<button type="button" 
 					class="answer-check-btn"
 					v-show="!showCheckAnswer" 
 					@click="handleCheckAnswer">查看答案解析</button>
 				<div v-show="showCheckAnswer">
-					<h4 class="answer-hd">
-						<span class="iconfont answer-hd-icon">&#xe71b;</span>
+					<h4 class="answer-hd"><!-- 
+						<span class="iconfont answer-hd-icon">&#xe71b;</span> -->
 						答案解析
 					</h4>
 					<div class="answer-info">
-						正确答案<span class="answer-color">{{itemRes}}</span>
+						正确答案<span v-for="(res,index) of itemRes" class="answer-color">{{res}}</span>
 					</div>
 				</div>	
 				
@@ -119,7 +124,7 @@
 				let str =  res.map((item,index)=>{					
 					return this.asList[item-1]
 				});				
-				return str.join(",");
+				return str;
 			},
 			ifCheckAnwer () {
 				let path = this.$route.path;
@@ -323,41 +328,66 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.3rem;
-	@include padlf40;
+	margin: 1.36rem 0.76rem 0;
+	
 	.test-title{
+		padding:0 0.672rem;
 		font-size: $font18;
-		color: $color-dark;
-		line-height: 1rem;
-		@include border-bottom($border-dark-grey);
+		color: $blue;
+		line-height: 0.896rem;
+		@include border-bottom;
 		.test-type{
-			color: $blue;
+			padding-right: 0.32rem;			
+		}
+	}
+	.test-content{
+		display: flex;
+	}
+	.test-pics{
+		width: 6.4rem;
+		margin: 0.36rem 1.04rem;
+		img{
+			width: 100%;
 		}
 	}
 	.test-list{
+		position: relative;
+		flex:1;
+		padding:0.36rem 1.24rem;
+		&:before{
+			content:'';
+			width: 0.16rem;
+			height: 0.16rem;
+			background: $color-dark;
+			border-radius: 50%;
+			position: absolute;
+			left: 0.64rem;
+			top: 0.56rem;
+		}
 		.test-list-item{
 			font-size: $font18;	
-			color: $color-black;	
-			line-height: 1rem;
+			color: $color-dark;	
+			line-height: 0.56rem;
+			padding-bottom: 0.36rem;
 			&.descrip{
-				padding:.25rem 0;
+				padding-bottom: 0.92rem;
 			}
 			.test-option-btn{
-				width:.7rem;
-				height: .7rem;
-				margin-right:.5rem;
+				width:0.512rem;
+				height: 0.512rem;
+				margin-right:0.24rem;
 				color: $color-grey;
 				font-size: $font18;
-				border:1px solid $color-grey;
+				border:1px solid $color-dark;
 				border-radius: 50%;
 
 			}
 			&.selected{
-				color: $bg-cyan;
+				color: $green;
 				.test-option-btn{
 					color: $color-white;
-					background: $bg-cyan;
-					border:1px solid $bg-cyan;
+					background: $green;
+					border:1px solid $green;
 				}
 			}
 		}
@@ -370,45 +400,68 @@
 }	
 .answer-card{
 	position: fixed;
-	top:1.3rem;
+	top:1.12rem;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	background: $color-white;
 	z-index: 1000;	
 }
-.btn-box{
-	border-top:1px solid $border-dark-grey;
+.btn-box{	
 	display: flex;
-	padding-top: 1rem;
-	margin-top: .5rem;
+	margin-top: 1.2rem;
 	.submit-btn{		
-		flex: 1;	
+		flex:1;
+		text-align: center;
 	}
 	.submit-btn /deep/ .test-start-btn{
-		width: 80% !important;
-		margin-left: 10%;
+		width: 4.664rem;
+		height: 0.76rem;
+		line-height: 0.76rem;
+		border-radius: 0;
+		margin: 0 auto;
+		background: $green;
 	}
 	.submit-btn.first /deep/ .test-start-btn{
 		background: $blue;
 	}
 }
 .answer-check-btn{
-	width:60%;
-	height: 1rem;
-	line-height: 1rem;
-	color: $color-dark-grey;
-	font-size: $font18;
-	border:1px solid $border-dark-grey;
-	border-radius: .5rem;
-	margin-left: 20%;
+	margin-top: 1.68rem;
+	width: 3.328rem;
+	height: 0.768rem;
+	line-height: 0.7655rem;		
+	font-size: $font20;
+	color: $color-white;
+	@include background($green);	
 }
-.answer-descrip{
-	margin-top: .5rem;
-	padding-top: .5rem;
+.answer-descrip{	
 	border-top: 1px solid $border-dark-grey;
 	color: $color-dark-grey;
-	.answer-hd{line-height: .7rem;margin-bottom: .25rem;}
+	text-align: center;
+
+	.answer-hd{
+		text-align: left;
+		line-height: 1.6;
+		font-size: $font18;
+		padding:0.36rem 1.24rem;
+		position: relative;
+		color: $blue;
+		&:before{
+			content:'';
+			width: 0.16rem;
+			height: 0.16rem;
+			background: $blue;
+			border-radius: 50%;
+			position: absolute;
+			left: 0.64rem;
+			top: 0.56rem;
+		}
+	}
+	.answer-info{
+		text-align: left;
+		padding:0 1.24rem;
+	}
 	.answer-hd-icon{
 		font-size: $font30;
 		color: $color-white;
@@ -419,8 +472,19 @@
 		margin-right: .1rem;
 	}
 	.answer-color{
-		color: $bg-cyan;
-		padding-left: .1rem;
+		width:0.512rem;
+		height: 0.512rem;
+		line-height: 0.512rem;
+		margin-right:.01rem;
+		margin-left:.25rem;
+		font-size: $font16;
+		border:1px solid $color-grey;
+		border-radius: 50%;
+		display: inline-block;
+		text-align: center;
+		color: $color-white;
+		background: $green;
+		border:1px solid $green;
 	}
 
 }

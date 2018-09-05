@@ -19,7 +19,7 @@
 							{{item.date}}							
 						</p>						
 					</div>
-					<span class="iconfont list-item-check">&#xe641;</span>					
+					<span class="iconfont list-item-check">&#xe623;</span>					
 				</router-link>
 			</ul>
 		</div>
@@ -66,7 +66,7 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.3rem;
+	margin-top: 2.32rem;
 	.no-item-tip{
 		font-size: $font18;
 		color: $color-dark-grey;
@@ -74,13 +74,14 @@
 		text-align: center;
 	}
 	.list{
-		@include padlf40;
-		padding-top: .7rem;
+		margin: 0 0.76rem;
+		@include border-top;
 	}
 	.list-item{
 		display: flex;
-		padding:.3rem 0;		
-		@include border-bottom($border-dark-grey);
+		padding:.3rem 0.24rem;	
+
+		@include border-bottom;
 		.list-item-hd{
 			flex: 1;
 			padding-right: .15rem; 
@@ -94,7 +95,6 @@
 			color: $color-orange;
 		}
 		.list-item-info{
-			padding-top: .2rem; 
 			color: $color-grey;
 			font-size: $font16;
 		}		

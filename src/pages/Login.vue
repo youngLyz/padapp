@@ -1,14 +1,21 @@
 <template>
-	<div>
+	<div class="log-page">
 		<dialogs-wrapper wrapper-name="default-message" tag="div" transition-name="fade">			
 		</dialogs-wrapper>
 		<simple-header :title="title"></simple-header>
 		<div class="log-body">
-			<form>
-				<form-input v-model="userName" ref="mobileInput" :obj="mobile"></form-input>
-				<form-input v-model="pswd" ref="pswdInput" :obj="password"></form-input>
+			<form class="log-form">
+				<img class="logo" src="./../assets/images/logo.png" alt="logo图片">
+				<div class="form-content">					
+					<img class="login-card" src="./../assets/images/login-card.png" alt="准考证图片">
+					<div class="input-box">
+						<input type="text" placeholder="请输入您的身份证号码" v-model="userName" />
+						<input type="text" placeholder="请输入您的准考证号码" v-model="pswd" />
+					</div>		
+				</div>
+							
 				<div class="form-btn">
-					<full-button name="登录" @skipNext="handleReigsterSubmit"></full-button>
+					<full-button name="提交登录" @skipNext="handleReigsterSubmit"></full-button>
 					<!-- <p class="login-link">
 						<router-link class="to-register-btn" to="/register">新用户注册</router-link>
 						<router-link class="to-forget-btn" to="/register">忘记密码？</router-link>
@@ -27,7 +34,7 @@
 		name: "UserLogin",
 		data () {
 			return {
-				title:'用户登录',
+				title:'智来天扬智慧移动考试系统',
 				mobile: {labelName:'账号',inputName:'mobile',inputType:'text',validCode:false},
 				password: {labelName:'密码',inputName:'pswd',inputType:'password',validCode:false},
 				userName:'',
@@ -42,6 +49,7 @@
 		},
 		methods: {
 			handleReigsterSubmit () {
+				//console.log("window.devicePixelRatio:"+window.devicePixelRatio);
 				let $ref = this.$refs;
 				let user = {
 						"phone_name":this.userName,//$ref.mobileInput.inputData,
@@ -73,14 +81,55 @@
 </script>
 
 <style lang="scss" scoped>
+.log-page{
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: url(./../assets/images/grid@2.jpg) repeat;
+}
 .log-body{
-	margin-top: 2rem;	
-	@include padlf40;
+	margin: 2.896rem auto 0 auto;	
+	width:9.72rem;
+	height: 7.04rem;
+	@include background;	
+	.log-form{
+		padding: 1.064rem 0.924rem;
+		.logo{
+			width: 3.946rem;
+			height: 1.206rem;
+			margin-left: 1.972rem;
+		}
+	}
+}
+.form-content{
+	margin-top: 0.592rem;
+	display: flex;
+	.login-card{
+		margin-right:0.664rem; 
+		width: 1.92rem;
+		height: 1.52rem;
+	} 
+	.input-box{
+		flex: 1;
+		input{
+			width: 3.916rem;
+			height: 0.58rem;
+			margin-top:0.14rem;
+			padding-left: 0.1rem;
+			line-height: 0.58rem;
+			font-size: $font16;
+			border:none;			
+			@include border-bottom;			
+		}
+	}
 }
 .form-btn{
-	width:60%;
-	margin: 1.3rem auto 0;
-	
+	width:100%;	
+	text-align: center;
+	margin-top: 1.064rem;
+	/*
 	.login-link{
 		margin-top: .75rem;
 		.to-register-btn{
@@ -93,7 +142,7 @@
 			color: $color-grey;
 			float: right;		
 		}
-	}
+	}*/
 	
 }
 

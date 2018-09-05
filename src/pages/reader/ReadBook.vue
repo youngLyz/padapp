@@ -3,7 +3,7 @@
 		<dialogs-wrapper wrapper-name="confirm-message" tag="div" transition-name="fade">			
 		</dialogs-wrapper>
 		<header class="header">
-			<span @click="handleReturnClick" class="header-back iconfont">&#xe64f;</span>
+			<span @click="handleReturnClick" class="header-back iconfont">&#xe615;</span>
 			<span class="bookName">{{ currentBook.name }}</span>
 			<span class="bookPage">
 				<input class="bookPageInput" v-model.number="page" type="number"> /{{numPages}}	
@@ -50,8 +50,8 @@
 	      		numPages: 0,
 	      		bookMark:null,
 	      		isAdd:true,
-	      		addIcon:'&#xe660;',
-	      		removeIcon:'&#xe6b7;'
+	      		addIcon:'&#xe621;',
+	      		removeIcon:'&#xe621;'
 			}
 		},
 		components:{
@@ -170,7 +170,7 @@
 
   .header-back{
     color: $blue;
-    font-size: $font36;    
+    font-size: $font30;    
     width: 1.8rem;
     display: block;
     position: absolute;

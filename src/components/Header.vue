@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <span @click="handleReturnClick" class="header-back iconfont">&#xe64f;</span>
+    <span @click="handleReturnClick" class="header-back iconfont">&#xe615;</span>
     {{title}}
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
 .header{
   width: 100%;
   height: $title-height;
-  line-height: $title-height;
+  line-height: $title-lineheight;
   background: $blue;
   position: fixed;
   top:0;
@@ -38,7 +38,7 @@ export default {
   @include page-title;
   .header-back{
     color: $color-white;
-    font-size: $font36;    
+    font-size: $font24;    
     width: 1.8rem;
     display: block;
     position: absolute;

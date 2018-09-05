@@ -19,16 +19,15 @@
 <style lang="scss" scoped>
 	.test-btn{
 		margin:.5rem 0;
+		text-align: center;
 		.test-start-btn{
-			width:100%;
-			height: 1rem;
-			line-height: 1rem;
-			display: block;
+			width: 4.664rem;
+			height: 0.76rem;
+			line-height: 0.76rem;
+			border-radius: 0;
+			background: $green;
 			color: $color-white;
-			font-size: $font18;
-			background: $bg-cyan;
-			border-radius: .25rem;
-			text-align: center;
+			font-size: $font20;
 		}
 	}
 </style>

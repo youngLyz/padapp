@@ -1,5 +1,4 @@
-<template>
-	
+<template>	
 	<div>
 		<simple-header :title="title"></simple-header>
 		<home-swiper :swiperList="swiperList"></home-swiper>
@@ -27,16 +26,7 @@
 					{id:1,img:require('../assets/images/swiper1.jpg')},
 					{id:2,img:require('../assets/images/swiper2.jpg')}
 					],
-				engiList:[
-					/*{firstClass:'资料员',secondClass:['专业管理实务','基础知识']},
-					{firstClass:'施工员',secondClass:['土建','设备安装','市政','装饰']},
-					{firstClass:'材料员',secondClass:['专业基础知识','专业管理实务']},
-					{firstClass:'标准员',secondClass:['专业基础知识','专业管理实务']},
-					{firstClass:'质量员',secondClass:['土建','市政','设备安装','装饰']},
-					{firstClass:'安全员',secondClass:['专业基础知识','专业管理实务']},
-					{firstClass:'机械员',secondClass:['专业基础知识','专业管理实务']},
-					{firstClass:'劳务员',secondClass:['专业基础知识','专业管理实务']}*/
-					]
+				engiList:[]
 					
 			}
 		},
@@ -46,10 +36,8 @@
 			Engineer
 		},
 		methods: {
-			getTestPaper(){
-			//	console.log("getExamTemplate before JSI:"+JSON.stringify(window.JSI.getText()))
-				JSI.getExamTemplate((res)=>{
-					//res.answer_time = 120;
+			getTestPaper(){			
+				JSI.getExamTemplate((res)=>{					
 					res.type_num = "单选题（"+res.pt_single_num+"）多选题（"+res.pt_multi_num+"）判断题（"+res.pt_tf_num+"）";
 					res.total_score = res.pt_single_num*res.pt_single_score
 					+res.pt_multi_num*res.pt_multi_score+res.pt_tf_num*res.pt_tf_score;
@@ -109,16 +97,13 @@
 <style lang="scss" scoped>
 
 .engineer-list{
-	overflow:hidden;
-	margin-bottom: 1.9rem;
-	@include border-top;
+	overflow-y:scroll;
+	height: 6.0rem;
+	@include padlf40;
 	.engineer-box{
 		width:50%;
 		float: left;		
-		box-sizing: border-box;
-		&:nth-child(2n){			
-			border-left: 1px solid $border-grey;			
-		}
+		box-sizing: border-box;	
 	}
 }
 

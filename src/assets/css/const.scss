@@ -1,45 +1,61 @@
 
-$title-height:1.3rem;
+$title-height:1.12rem;
+$title-lineheight:1rem;
 
-$blue:#1b5adb;
-$color-blue:#1fbbfd;
+$blue:#0F47AA;
+$color-blue:#0F47AA;
 $color-white:#ffffff;
-$color-grey:#989898;
+
+$color-light-grey:#b3b3b3;
+$color-grey:#808080;
+
 $color-dark:#515151;
 $color-black:#212121;
-$color-orange:#ffb507;
-$color-red:#ed3f40;
-$color-dark-grey:#656565;
+
+$color-dark-grey:#666;
+
 $border-grey:#f0f0f0;
 $border-dark-grey:#dedede;
-$bg-grey:#f7f7f7;
+$border-ccc:#ccc;
+
+$bg-grey:#e6e6e6;
 $bg-light-grey:#f9f9f9;
-$bg-cyan:#65e1a5;
+
 $color-grey-dark:#999999;
 
-$font36:30px;
-$font30:24px;
-$font24:20px;
-$font20:18px;
-$font18:16px;
-$font16:14px;
-$font14:12px;
+$color-orange:#F9BE00;
+$color-red:#EC001F;
+$bg-cyan:#F9BE00;
+$green:#0fb753;
+
+$font36:36px;
+$font30:30px;
+$font24:24px;
+$font20:20px;
+$font18:18px;
+$font16:16px;
+$font14:14px;
 
 
 @mixin page-title(){
 	font-family:STHeiTi;
 	font-size:$font24;
+	letter-spacing: 2px;
 	color:$color-white;	
 }
 
 @mixin padlf40{
-	padding-left:.7rem;
-	padding-right: .7rem;
+	padding-left:0.452rem;
+	padding-right: .452rem;
 }
 
-@mixin border-bottom($color:$border-grey){
+@mixin border-bottom($color:$border-ccc){
 	border-bottom: 1px solid $color;
 }
-@mixin border-top($color:$border-grey){
+@mixin border-top($color:$border-ccc){
 	border-top: 1px solid $color;
+}
+
+@mixin background($color:$color-white){
+	background-color: $color;
 }

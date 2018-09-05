@@ -34,15 +34,23 @@
 </script>
 <style lang="scss" scoped>
 .home-swiper /deep/ .swiper-pagination-bullet{
-		width:16px;
-		height: 16px;
-		margin:0 8px;
+		width:0.32rem;
+		height: 0.32rem;
+		margin-right: 0.228rem;
+		background-color: $color-grey-dark;
+		opacity: 1;
+		&:last-child{
+			margin-right:0;
+		}
+		&.swiper-pagination-bullet-active{
+			background-color: $green;
+		}
 	}
 .home-swiper{	
 	overflow: hidden;
 	width: 100%;
-	height:4rem;		
-	margin-top: 1.3rem;	
+	height:3.6rem;		
+	margin-top: 1.12rem;	
 }
 .home-swiper-img{
 	width: 100%;

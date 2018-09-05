@@ -1,23 +1,23 @@
 <template>	
 	<nav class="footer-nav">	
-		<div class="footer-link" 
+		<div class="footer-link prev-link" 
 			@click="clickPrevItem"
 			:class="{'disable':itemNum===1}">
-			<span class="iconfont">&#xe64f;</span>
+			<span class="iconfont prev">&#xe625;</span>
 			<span class="footer-text">上一题</span>
 		</div>
 		<div class="footer-link" @click="clickAnswerCard">
-			<span class="iconfont">&#xe644;</span>
+			<span class="iconfont">&#xe614;</span>
 			<span class="footer-text">答题卡</span>
 		</div>
 		<div class="footer-link">
-			<span class="iconfont">&#xe616;</span>
+			<span class="iconfont">&#xe620;</span>
 			<span class="footer-text">{{downClock}}</span>
 		</div>
-		<div class="footer-link" 
+		<div class="footer-link next-link" 
 			@click="clickNextItem"
 			:class="{'disable':itemNum===itemDetail.length}">
-			<span class="iconfont">&#xe8f0;</span>
+			<span class="iconfont">&#xe625;</span>
 			<span class="footer-text">下一题</span>
 		</div>
 	</nav>
@@ -58,24 +58,27 @@
 	display: flex;
 	.footer-link{
 		flex: 1;
-		color: $color-grey-dark;
+		color: $color-grey;
 		text-align: center;
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
-		&.active{
+		&.next-link,&.prev-link{
 			color: $blue;
 		}
 		&.disable{
-			color: $border-dark-grey;
+			color: $color-grey;
 			cursor: not-allowed;
 		}
+		.prev{transform:rotate(180deg);}
 		.iconfont{
 			font-size: $font30;
 		}
 		.footer-text{
 			font-size: $font24;			
 		}
+
 	}
+
 }
 </style>

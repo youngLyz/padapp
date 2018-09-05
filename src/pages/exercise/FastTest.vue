@@ -8,7 +8,7 @@
 			<h2 class="select-title">选择测试题型</h2>
 			<select-type @selectedType="handleSeleted"></select-type>
 			<div class="btn-box" v-show="selectType">
-				<line-button name="开始练习" @skipNext="handleBtnClick"></line-button>
+				<full-button name="开始练习" @skipNext="handleBtnClick"></full-button>
 			</div>	
 		</div>
 	</div>
@@ -17,7 +17,7 @@
 <script type="text/javascript">
 	import PageHeader from 'comp/Header'
 	import SelectType from './components/SelectType'
-	import LineButton from 'comp/LineButton'
+	import FullButton from 'comp/FullButton'
 	export default {
 		name: 'FastTest',
 		data () {
@@ -35,7 +35,7 @@
 		components: {
 			PageHeader,
 			SelectType,
-			LineButton
+			FullButton
 		},
 		methods: {			
 			handleBtnClick () {
@@ -100,17 +100,18 @@
 
 <style lang="scss" scoped>
 .select-body{
-	margin-top: 1.3rem;
-	@include padlf40;	
+	margin: 1.12rem 0.76rem;
 }
 .select-title{
 		color: $blue;
-		font-size: $font24;
-		height: 1.7rem;
-		line-height: 1.7rem;
+		font-size: $font20;
+		height: 1.2rem;
+		line-height: 1.2rem;
+		padding:0 0.24rem;
 	}
-.btn-box{
-	margin-top: .8rem;	
+.btn-box{	
+	margin-top: 1.2rem;
+	text-align: center;
 }
 
 </style>

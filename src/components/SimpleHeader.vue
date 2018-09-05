@@ -15,7 +15,7 @@ export default {
 .header{
   width: 100%;
   height: $title-height;
-  line-height: $title-height;
+  line-height: $title-lineheight;
   background: $blue;
   position: fixed;
   top:0;

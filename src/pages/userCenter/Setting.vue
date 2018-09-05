@@ -5,33 +5,35 @@
 			<ul class="point-list">
 				<li class="point-item">
 					报考地					
-					<span class="iconfont right">&#xe8f0;</span>
+					<span class="iconfont right">&#xe628;</span>
 					<span class="point-info">上海</span>
 				</li>
 				<li class="point-item">
 					选择科目										
-					<span class="iconfont right">&#xe8f0;</span>
+					<span class="iconfont right">&#xe628;</span>
 					<span class="point-info">专业管理实务</span>
 				</li>
 			</ul>
 			<ul class="point-list">
 				<li class="point-item">
 					清除缓存
+					<span class="iconfont right">&#xe628;</span>
 					<span class="point-info">151 KB</span>					
 				</li>
 				<li class="point-item">
 					版本更新			
+					<span class="iconfont right">&#xe628;</span>
 					<span class="point-info">V1.2.4</span>
 				</li>
 				<li class="point-item">
 					意见反馈			
-					<span class="iconfont right">&#xe8f0;</span>
+					<span class="iconfont right">&#xe628;</span>
 				</li>
 			</ul>	
 			<ul class="point-list">
 				<li class="point-item">
 					关于
-					<span class="iconfont right">&#xe8f0;</span>				
+					<span class="iconfont right">&#xe628;</span>				
 				</li>				
 			</ul>	
 			<div class="btn-box">
@@ -65,22 +67,18 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.3rem;
+	margin-top: 1.12rem;
 
 	.point-list{			
-		border-bottom: .5rem solid $bg-grey;
-		&:first-child{
-			border-top: .5rem solid $bg-grey;
-		}
+		margin: 0 0.76rem;
 		.point-item{
 			@include padlf40;
-			height: 1.25rem;
-			line-height: 1.25rem;
+			height: 1.2rem;
+			line-height: 1.2rem;
 			color:$color-dark;
+			font-size: $font20;
 			@include border-bottom($border-dark-grey);
-			&:last-child{
-				border-bottom:none;
-			}			
+						
 			.iconfont{
 				color:$blue;
 				font-size: $font20;		
@@ -96,7 +94,11 @@
 		}
 	}
 	.btn-box{
-		padding-top: 1rem;
+		margin-top: 1.72rem;
+		text-align: center;
+		/deep/ .submit-btn{
+			background: $blue;
+		}
 	}
 }	
 </style>

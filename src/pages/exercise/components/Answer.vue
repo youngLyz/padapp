@@ -3,7 +3,8 @@
 		<simple-header :title="itemTheme"></simple-header>
 		<div class="page-body">
 			<template v-if="answerids['1'].length>0">
-				<h4 class="item-type">
+			<div class="item-info">
+			<h4 class="item-type">
 					单项选择题
 				</h4>
 				<div class="item-answs">
@@ -14,8 +15,11 @@
 						@click="clickAnswer(item.num,item.answer_id)"
 					>{{item.num}}</span>
 				</div>
+			</div>
+				
 			</template>
 			<template v-if="answerids['2'].length>0">
+			<div class="item-info">
 			<h4 class="item-type">
 				多项选择题
 			</h4>
@@ -28,8 +32,10 @@
 					@click="clickAnswer(item.num,item.answer_id)"
 				>{{item.num}}</span>
 			</div>
+			</div>
 			</template>
 			<template v-if="answerids['3'].length>0">
+			<div class="item-info">
 			<h4 class="item-type">
 				判断题
 			</h4>
@@ -40,6 +46,7 @@
 					:class="{'selected':item.answer_id.length>0}"
 					@click="clickAnswer(item.num,item.answer_id)"
 				>{{item.num}}</span>
+			</div>
 			</div>
 		</template>
 			<div class="remark">
@@ -75,28 +82,39 @@
 
 <style lang="scss" scoped>
 .page-body{
-	padding: .5rem 0;
-	max-height: 12rem;
+	max-height: 10.04rem;
 	overflow: auto;
-	@include padlf40;
+	margin-top: 1.52rem;
+	.item-info{
+		@include border-top;
+		margin:0 0.76rem;
+		padding: 0.36rem 0.72rem;
+	}
 	.item-type{
-		color: $blue;
+		position: relative;		
+		color: $color-grey;
 		font-size: $font18;
-		font-weight: bold;
-		height: .45rem;
-		line-height: .45rem;
-		border-left: .1rem solid $blue;
-		padding-left: .25rem;
-		margin: .15rem 0;
+		line-height: 1;
+		padding-left:0.6rem;
+		&:before{
+			content:'';
+			width: 0.16rem;
+			height: 0.16rem;
+			background: $color-grey;
+			border-radius: 50%;
+			position: absolute;
+			left:0;
+			top: 0.096rem;
+		}
 	}
 	.item-answs{
-		margin: .3rem .35rem;
+		margin:0 0.6rem;
 		.as-item{
-			width:.7rem;
-			height: .7rem;
-			line-height: .7rem;
+			width:0.512rem;
+			height: 0.512rem;
+			line-height: 0.512rem;
 			margin-right:.25rem;
-			margin-bottom:.25rem;
+			margin-top:.25rem;
 			color: $color-grey;
 			font-size: $font16;
 			border:1px solid $color-grey;
@@ -112,8 +130,11 @@
 		}
 	}	
 	.remark{
-		font-size: $font16;
-		color: $color-grey;
+		margin:0 0.76rem;
+		padding: 0.36rem 0.72rem;
+		@include border-top;
+		font-size: $font18;
+		color: $color-grey-dark;
 	}
 }
 

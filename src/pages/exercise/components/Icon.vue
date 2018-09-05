@@ -17,7 +17,7 @@
 <style lang="scss" scoped>
 .icon-item{
 	flex:1;
-	height: 3.3rem;
+	height: 3.6rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -28,8 +28,9 @@
 		color: $blue;
 	}
 	.icon-text{
-		color: $color-dark;
+		color: $blue;
 		font-size: $font20;
+		font-weight: 600;
 	}
 }
 </style>

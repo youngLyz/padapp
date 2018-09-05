@@ -16,14 +16,11 @@
 
 <style lang="scss" scoped>
 	.submit-btn{
-		width: 90%;
-		height: 1.26rem;
-		line-height: 1.26rem;
-		border-radius: 0.63rem;
-		margin-left: 5%;
-		font-size: $font24;
+		width: 2.696rem;
+		height: 0.7655rem;
+		line-height: 0.7655rem;		
+		font-size: $font20;
 		color: $color-white;
-		background: $blue;
-		box-shadow: 1px 5px 3px rgba(0,0,0,.3);
+		@include background($green);		
 	}
 </style>

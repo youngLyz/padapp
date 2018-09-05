@@ -29,14 +29,13 @@
 </script>
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 2rem;
-	@include padlf40;
+	margin:1.68rem 0.76rem;
 	.date {
 		line-height: 1.5;
 		color: $color-grey;
 	}
 	.content{
-		margin: .5rem 0;		
+		margin: .24rem 0;		
 	}
 }
 </style>

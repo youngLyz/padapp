@@ -9,7 +9,7 @@
 					:key="index"
 					@click="handlePointClick(item.qpt_id)">
 					{{item.qpt_name}}
-					<span class="iconfont">&#xe8f0;</span>
+					<span class="iconfont">&#xe628;</span>
 				</li>
 			</ul>	
 		</div>
@@ -77,7 +77,7 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.3rem;
+	margin-top: 2.32rem;
 	.no-item-tip{
 		font-size: $font18;
 		color: $color-dark-grey;
@@ -85,13 +85,14 @@
 		text-align: center;
 	}
 	.point-list{
-		border-top: .25rem solid $bg-grey;
+		margin: 0 0.768rem;
+		@include border-top;
 		.point-item{
-			@include padlf40;
-			height: 1rem;
-			line-height: 1rem;
+			padding:0 0.24rem;
+			height: 1.2rem;
+			line-height: 1.2rem;
 			color:$color-dark-grey;
-			@include border-bottom($border-dark-grey);
+			@include border-bottom;
 			.iconfont{
 				float: right;				
 				color:$blue;

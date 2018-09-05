@@ -10,7 +10,7 @@
 					:key="item.id"
 					:to="'/detail/'+item.id">
 					{{item.title}}					
-					<span class="iconfont right">&#xe8f0;</span>
+					<span class="iconfont right">&#xe628;</span>
 					<span class="point-info">{{item.date}}</span>
 				</router-link>		
 			</ul>	
@@ -47,10 +47,11 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.3rem;
+	margin-top: 2.32rem;
 
-	.point-list{	
-		border-top: .5rem solid $bg-grey;		
+	.point-list{
+		@include border-top;
+		margin: 0 0.24rem;					
 		.point-item{
 			@include padlf40;
 			height: 1.25rem;
@@ -67,7 +68,9 @@
 				margin-right: .15rem;
 			}
 			.right{
-				float: right;				
+				float: right;	
+				color: $border-ccc;
+				font-size: $font20;			
 			}
 		}
 	}

@@ -386,6 +386,46 @@ if(typeof JSI == 'undefined')
 					id:2,
 					name:'建筑八大员考试参考资料文档二',
 					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
+				},
+				{
+					id:1,
+					name:'建筑八大员考试参考资料文档三',
+					url:'./static/a.pdf'
+				},
+				{
+					id:2,
+					name:'建筑八大员考试参考资料文档四',
+					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
+				},
+				{
+					id:1,
+					name:'建筑八大员考试参考资料文档五',
+					url:'./static/a.pdf'
+				},
+				{
+					id:2,
+					name:'建筑八大员考试参考资料文档六',
+					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
+				},
+				{
+					id:1,
+					name:'建筑八大员考试参考资料文档七',
+					url:'./static/a.pdf'
+				},
+				{
+					id:2,
+					name:'建筑八大员考试参考资料文档八',
+					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
+				},
+				{
+					id:1,
+					name:'建筑八大员考试参考资料文档九',
+					url:'./static/a.pdf'
+				},
+				{
+					id:2,
+					name:'建筑八大员考试参考资料文档十',
+					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
 				}
 			];
 		func(data);

@@ -108,23 +108,25 @@
 		padding-top: .7rem;
 	}
 	.list-item{
-		display: block;
-		padding:.3rem 0;
+		height: 1.192rem;
+		padding-left: 0.2rem;			
 		display: flex;
-		@include border-bottom($border-dark-grey);
+		@include border-bottom;		
 
 		.list-item-link{
 			flex:1;
-			line-height: 1.5;
 			color: $color-dark;
 			font-size: $font18;
+			line-height: 1.192rem;
 		}
 		.list-item-asw{			
 			font-size: $font16;
 			color: $color-orange;
-			padding:.05rem .25rem;
-			border:1px solid $color-orange;
-			border-radius: .5rem;
+			display: inline-block;
+			padding:0 .25rem;
+			height: 0.6rem;
+			margin-top: 0.3rem;
+			border:1px solid $color-orange;			
 		}
 	}
 }	

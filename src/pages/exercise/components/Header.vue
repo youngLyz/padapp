@@ -2,8 +2,7 @@
   <header>
     <div class="header">    
       <a class="header-arrow" href="javascript:void(0)" @click="headerArrowClick">
-        {{currentTitle.qk_name}}
-        <span class="iconfont" ref="headerIcon">&#xe635;</span>
+        {{currentTitle.qk_name}}<span class="iconfont">&#xe635;</span>
       </a>      
     </div>
     <transition 
@@ -19,8 +18,8 @@
             >{{item.qk_name}}</li>         
 
           <router-link to="/home" tag="li" class="list-item">
-            切换科目
-            <span class="iconfont">&#xe8f0;</span>
+            切换岗位
+            <span class="iconfont">&#xe628;</span>
           </router-link>
         </ul>        
       </div> 
@@ -54,11 +53,11 @@ export default {
   methods: {
     ...mapActions(['setCurrentClaz']),
     headerArrowClick () {
-      if(this.isShow){
+     /* if(this.isShow){
         this.$refs.headerIcon.innerHTML = '&#xe635;';  
       }else{
         this.$refs.headerIcon.innerHTML = '&#xe634;';  
-      }
+      }*/
       this.isShow = !this.isShow;
       
     },
@@ -95,6 +94,10 @@ export default {
   .header-arrow{
     font-size: $font24;
     color: $color-white;
+
+    .iconfont{
+      font-size: $font24;
+    }
   }  
 }
 
@@ -108,19 +111,19 @@ export default {
   width: 100%;
 }
 .list{
-    width: 100%;
+    padding: 0 0.784rem;
     background: $color-white;
     .list-item{
       width: 100%;
-      height: 1rem;
-      line-height: 1rem;
+      height: 1.192rem;
+      line-height: 1.192rem;
       color: $blue;
       font-size: $font18;
       text-align: center;      
-      @include border-bottom($border-dark-grey);
+      @include border-bottom;
       &:last-child{
         font-size:$font20;
-        border-top: .1rem solid $bg-grey;
+        color: $color-dark-grey;        
       }
     }
   }

@@ -7,8 +7,8 @@ import './assets/css/reset.css'
 import './assets/css/iconfont_beta/iconfont.css'
 import animate from 'animate.css'
 import tools from 'js/tools.js'
-//import './assets/js/JSI.js'
-import './assets/js/LocalJSI.js'
+import './assets/js/JSI.js'
+//import './assets/js/LocalJSI.js'
 import './assets/js/message.js'
 
 Vue.config.productionTip = false

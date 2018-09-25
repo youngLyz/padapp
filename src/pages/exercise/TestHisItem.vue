@@ -106,7 +106,9 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin: 1.36rem 0.76rem 0;	
+	margin: 1.36rem 0.76rem 0;
+	height: 9rem;
+	overflow: auto;	
 	.test-title{
 		padding:0 0.672rem;
 		font-size: $font18;
@@ -176,7 +178,7 @@
 	}	
 }	
 .answer-check-btn{
-	margin-top: 1.68rem;
+	margin-top: 1.2rem;
 	width: 3.328rem;
 	height: 0.768rem;
 	line-height: 0.7655rem;		
@@ -188,7 +190,7 @@
 	border-top: 1px solid $border-dark-grey;
 	color: $color-dark-grey;
 	text-align: center;
-
+padding-bottom: 0.72rem;
 	.answer-hd{
 		text-align: left;
 		line-height: 1.6;

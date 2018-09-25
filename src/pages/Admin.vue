@@ -5,11 +5,11 @@
 			<ul class="point-list">
 				<li class="point-item" @click="initSystemDB">
 					初始化考试系统数据库					
-					<span class="iconfont right">&#xe8f0;</span>					
+					<span class="iconfont right">&#xe628;</span>					
 				</li>
 				<li class="point-item" @click="submitLocalTest">
 					提交考生试卷
-					<span class="iconfont right">&#xe8f0;</span>					
+					<span class="iconfont right">&#xe628;</span>					
 				</li>
 			</ul>
 			<div class="btn-box">
@@ -54,36 +54,42 @@
 
 <style lang="scss" scoped>
 .page-body{
-	margin-top: 1.3rem;
+	margin-top: 2.312rem;
 
-	.point-list{	
-		border-top: .5rem solid $bg-grey;
-		border-bottom: .5rem solid $bg-grey;
-		.point-item{
-			@include padlf40;
-			height: 1.25rem;
-			line-height: 1.25rem;
-			color:$color-dark;
-			
-			&:first-child{
-				@include border-bottom($border-dark-grey);
-			}
-			.iconfont{
-				color:$blue;
-				font-size: $font20;		
-			}
-			.point-info{
-				float: right;
-				margin-right: .15rem;
-				color: $color-grey;	
+	.point-list{		
+		margin: 0 0.76rem;
+		@include border-top;
+
+		.point-item{			
+			height: 1.192rem;
+			line-height: 1.192rem;
+			padding-left: 0.2rem;
+			font-size: $font18;
+			font-weight: 600;
+			color:$color-grey;
+			@include border-bottom;		
+
+			.left{
+				font-size: $font30;
+				font-weight: normal;
+				padding-right:0.356rem; 
+				vertical-align: middle;
 			}
 			.right{
+				font-size: $font18;
+				font-weight: normal;
+				color: $color-light-grey;
 				float: right;				
 			}
+			
 		}
 	}
 	.btn-box{
-		padding-top: 1rem;
-	}	
+		margin-top: 4.32rem;
+		text-align: center;
+		/deep/ .submit-btn{
+			background: $blue;
+		}
+	}
 }	
 </style>

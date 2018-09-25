@@ -388,42 +388,42 @@ if(typeof JSI == 'undefined')
 					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
 				},
 				{
-					id:1,
+					id:3,
 					name:'建筑八大员考试参考资料文档三',
 					url:'./static/a.pdf'
 				},
 				{
-					id:2,
+					id:4,
 					name:'建筑八大员考试参考资料文档四',
 					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
 				},
 				{
-					id:1,
+					id:5,
 					name:'建筑八大员考试参考资料文档五',
 					url:'./static/a.pdf'
 				},
 				{
-					id:2,
+					id:6,
 					name:'建筑八大员考试参考资料文档六',
 					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
 				},
 				{
-					id:1,
+					id:7,
 					name:'建筑八大员考试参考资料文档七',
 					url:'./static/a.pdf'
 				},
 				{
-					id:2,
+					id:8,
 					name:'建筑八大员考试参考资料文档八',
 					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
 				},
 				{
-					id:1,
+					id:9,
 					name:'建筑八大员考试参考资料文档九',
 					url:'./static/a.pdf'
 				},
 				{
-					id:2,
+					id:10,
 					name:'建筑八大员考试参考资料文档十',
 					url:'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf'
 				}

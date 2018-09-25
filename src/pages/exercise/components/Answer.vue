@@ -82,9 +82,9 @@
 
 <style lang="scss" scoped>
 .page-body{
-	max-height: 10.04rem;
+	height: 10.04rem;
 	overflow: auto;
-	margin-top: 1.52rem;
+	padding-top: 1.52rem;
 	.item-info{
 		@include border-top;
 		margin:0 0.76rem;

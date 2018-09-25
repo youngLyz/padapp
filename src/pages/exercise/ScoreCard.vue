@@ -146,7 +146,7 @@
 		}
 	}
 	.answer-list{
-
+	padding-bottom: 0.36rem;
 	}
 	.item-info{
 		@include border-top;

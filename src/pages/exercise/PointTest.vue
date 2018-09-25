@@ -92,6 +92,7 @@
 			height: 1.2rem;
 			line-height: 1.2rem;
 			color:$color-dark-grey;
+			font-size:$font18;
 			@include border-bottom;
 			.iconfont{
 				float: right;				

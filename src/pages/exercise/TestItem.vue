@@ -152,8 +152,7 @@
 							console.log("saveExamResult callback:"+res.result);
 							this.$store.commit('submitExamDate');//设置考试时间
 							this.$router.push("/exam");	
-						})
-						
+						})						
 					}else{
 						
 				  		if(this.prevUrl==='simulateTest'){//模拟考试
@@ -329,7 +328,8 @@
 <style lang="scss" scoped>
 .page-body{
 	margin: 1.36rem 0.76rem 0;
-	
+	height: 9rem;
+	overflow: auto;
 	.test-title{
 		padding:0 0.672rem;
 		font-size: $font18;
@@ -370,7 +370,7 @@
 			line-height: 0.56rem;
 			padding-bottom: 0.36rem;
 			&.descrip{
-				padding-bottom: 0.92rem;
+				
 			}
 			.test-option-btn{
 				width:0.512rem;
@@ -409,10 +409,10 @@
 }
 .btn-box{	
 	display: flex;
-	margin-top: 1.2rem;
 	.submit-btn{		
 		flex:1;
 		text-align: center;
+		margin:1rem 0;
 	}
 	.submit-btn /deep/ .test-start-btn{
 		width: 4.664rem;
@@ -427,7 +427,7 @@
 	}
 }
 .answer-check-btn{
-	margin-top: 1.68rem;
+	margin-top: 1.2rem;
 	width: 3.328rem;
 	height: 0.768rem;
 	line-height: 0.7655rem;		
@@ -439,6 +439,7 @@
 	border-top: 1px solid $border-dark-grey;
 	color: $color-dark-grey;
 	text-align: center;
+	padding-bottom: 0.72rem;
 
 	.answer-hd{
 		text-align: left;

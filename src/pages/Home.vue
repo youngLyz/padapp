@@ -36,7 +36,7 @@
 			Engineer
 		},
 		methods: {
-			getTestPaper(){			
+			getTestPaper(){
 				JSI.getExamTemplate((res)=>{					
 					res.type_num = "单选题（"+res.pt_single_num+"）多选题（"+res.pt_multi_num+"）判断题（"+res.pt_tf_num+"）";
 					res.total_score = res.pt_single_num*res.pt_single_score
@@ -69,27 +69,7 @@
 					this.getTestPaper();
 				}
 			}
-
-			//获取考试信息【考试时间、答题时间等】，设置到state中
-			//if(this.$store.state.pt_info.submit_date==null){//尚未考试
-				/*let pt_info = {
-						pt_name:"2018年资料员专业考试试题",				
-						pt_single_num:30,
-						pt_single_score:1,
-						pt_multi_num:20,
-						pt_multi_score:2,
-						pt_tf_num:20,
-						pt_tf_score:1.5,				
-						answer_time:"120",
-						type_num:"单选题（30）多选题（20）判断题（20）",
-						total_score:100,
-						intro:"2018年资料员专业基础知识试题一，本试卷是为考资料员考试的考生准备的专业基础知识试题及答案练习。",
-						exam_date:'2018-07-19 15:05:00',
-						submit_date:null
-					}*/
-				
-				
-			//}
+			
 		}
 	}
 </script>

@@ -28,3 +28,6 @@ webpack创建项目
 3、npm install webpack webpack-cli --save-dev
 4、本地安装依赖npm install --save lodash
 5、执行npx webpack，
+
+
+#create tag 2018
